@@ -2,8 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { routes } from "./pages/router";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { signin } from "./api/firebase/database";
 
 const App = () => {
+  React.useEffect(() => signin(), []);
   return (
     <div>
       <nav>
