@@ -2,9 +2,9 @@ import * as React from "react";
 import styled from "styled-components";
 import { useStore } from "effector-react";
 import { $songTitle, handleChange } from "../../features/song/model";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { DragDropContext } from "react-beautiful-dnd";
 
-const reorder = () => {};
+// const reorder = () => {};
 
 export const CreateSong: React.FC = () => {
   const title = useStore($songTitle);
@@ -12,7 +12,7 @@ export const CreateSong: React.FC = () => {
     if (!result.destination) {
       return;
     }
-    const items = reorder;
+    //const items = reorder;
   }, []);
   return (
     <>
