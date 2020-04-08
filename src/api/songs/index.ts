@@ -12,8 +12,8 @@ export type Chord = {
 };
 
 export type Line = {
-  chord: Chord[];
-  lyric: string;
+  chords: Chord[];
+  text: string;
 };
 
 export type LyricChrods = {
