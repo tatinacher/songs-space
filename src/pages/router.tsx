@@ -26,5 +26,9 @@ export const routes = [
   {
     path: "/variation/:id",
     component: SongChords
+  },
+  {
+    path: "/create-song",
+    component: CreateSong
   }
 ];
