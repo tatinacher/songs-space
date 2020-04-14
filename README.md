@@ -15,9 +15,9 @@ Todo tasks:
   - [ ] Switch guitar/ukulele
   - [ ] Color scheme
 - [ ] Search
-- [ ] Create song page
 
 Done:
 
 - [x] Authors page
 - [x] Authors songs page
+- [x] Create song page

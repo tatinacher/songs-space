@@ -1,27 +1,34 @@
 import * as React from "react";
 import styled from "styled-components";
 import { useStore } from "effector-react";
-import { handleChange, $song } from "./model";
-import { LineType, ChordsType } from "../../constants/types";
-import { Text, Textarea, Input } from "../../ui";
+import { handleChange, $song, updateSong, submitForm } from "./model";
+import { Text, Textarea, Input, Chords, LyricsText } from "../../ui";
 import { Melody } from "../../assets/icons";
+import { parseLyrics } from "../../lib/chords";
+import {
+  getAuthors,
+  $authors,
+  getAuthorSongs,
+  $authorSongs
+} from "../../features/authors";
 
 export const CreateSong: React.FC = () => {
-  const song = useStore($song);
-  let [lyrics, setLyrics] = React.useState("");
-  const result: LineType[] = [];
+  const { title, fullText, lyrics } = useStore($song);
+  const authors = useStore($authors);
+  const authorSongs = useStore($authorSongs);
 
-  const change = React.useCallback(event => {
-    setLyrics(event.target.value);
-  }, []);
+  const onClickHandler = React.useCallback(() => {
+    const lines = parseLyrics(fullText);
+    updateSong(lines);
+  }, [fullText]);
 
   const preview =
-    result.length !== 0 ? (
+    lyrics && lyrics.length !== 0 ? (
       <div>
-        {result.map(line => (
+        {lyrics.map((line, key) => (
           <>
-            <Chords data={line.chords} />
-            {line.text}
+            <Chords data={line.chords} key={key} />
+            <LyricsText>{line.text}</LyricsText>
           </>
         ))}
       </div>
@@ -32,41 +39,58 @@ export const CreateSong: React.FC = () => {
         <Melody />
       </div>
     );
+  React.useEffect(() => {
+    getAuthors();
+  }, []);
 
   return (
     <Song>
-      <div>
-        <Text>Title:</Text>
-        <Input name="title" value={song.title} onChange={handleChange} />
-      </div>
-      <div>
-        <Text>Lyrics:</Text>
-        <Textarea name="lyrics" value={lyrics} onChange={change} />
-      </div>
-      <Text>Result:</Text>
-      {preview}
+      <form onSubmit={submitForm}>
+        <button type="submit">Сохранить</button>
+        <div>
+          <Text>Title:</Text>
+          <Input name="title" value={title} onChange={handleChange} />
+        </div>
+        <div>
+          <Text>Band:</Text>
+          <select
+            onChange={event => {
+              getAuthorSongs(event.target.value);
+            }}
+          >
+            <option value="">Select Author</option>
+            {authors.map(author => (
+              <option key={author._id} value={author._id}>
+                {author.author}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <Text>Songs:</Text>
+          <select name="songId" onChange={handleChange}>
+            <option value="">Select Song</option>
+            {authorSongs &&
+              authorSongs.songs.map(song => (
+                <option key={song.id} value={song.id}>
+                  {song.title}
+                </option>
+              ))}
+          </select>
+        </div>
+        <div>
+          <Text>Lyrics:</Text>
+          <Textarea name="fullText" value={fullText} onChange={handleChange} />
+        </div>
+        <button type="button" onClick={onClickHandler}>
+          Parse
+        </button>
+        <Text>Result:</Text>
+        {preview}
+      </form>
     </Song>
   );
 };
-
-export const Chords: React.FC<{ data?: ChordsType[] }> = ({ data }) => {
-  if (!data) return null;
-  return (
-    <ChordLine>
-      {data.map(({ width, name }) => (
-        <Chord width={width}>{name}</Chord>
-      ))}
-    </ChordLine>
-  );
-};
-
-export const Chord = styled.div<{ width: number }>`
-  width: ${props => props.width}px;
-`;
-
-export const ChordLine = styled.div`
-  display: flex;
-`;
 
 export const Song = styled.div`
   padding: 20px;

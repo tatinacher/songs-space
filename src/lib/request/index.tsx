@@ -14,7 +14,6 @@ export const request = async ({
     "Content-Type": "application/json;charset=UTF-8",
     Accept: "application/json"
   };
-  console.log(params);
   const options =
     method === "get"
       ? { headers, method }
@@ -23,7 +22,7 @@ export const request = async ({
           method,
           body: JSON.stringify(params)
         };
-  console.log(method, options);
+  console.log(params);
 
   try {
     const response = await fetch(request, options);

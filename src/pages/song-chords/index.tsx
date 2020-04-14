@@ -3,7 +3,7 @@ import { useStore } from "effector-react";
 import { getLyricChrods, $lyricChords } from "../../features/song";
 import { useParams } from "react-router";
 import { LyricChrods } from "../../api/songs";
-import { Title } from "../../ui";
+import { Title, Chords, LyricsText } from "../../ui";
 import { Lyrics } from "./style";
 
 export const SongChords: React.FC = () => {
@@ -16,7 +16,6 @@ export const SongChords: React.FC = () => {
   const lyricChords: LyricChrods | null = useStore($lyricChords);
 
   if (!lyricChords) return null;
-  console.log(lyricChords);
   const { title, lyrics } = lyricChords;
 
   return (
@@ -25,8 +24,8 @@ export const SongChords: React.FC = () => {
       <Lyrics>
         {lyrics.map(({ chords, text }, key) => (
           <div key={key}>
-            <div>{chords.map(chord => chord.name)}</div>
-            <div>{text}</div>
+            <Chords data={chords} key={key} />
+            <LyricsText>{text}</LyricsText>
           </div>
         ))}
       </Lyrics>

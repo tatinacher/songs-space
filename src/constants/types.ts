@@ -1,6 +1,7 @@
 export type SongType = {
   title?: string;
   lyrics?: LineType[];
+  lyricsText?: string;
 };
 
 export type LineType = {
