@@ -21,3 +21,4 @@ Done:
 - [x] Authors page
 - [x] Authors songs page
 - [x] Create song page
+- [x] Last added songs

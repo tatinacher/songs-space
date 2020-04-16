@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import { Nav, Menu } from "./style";
+import styled from "styled-components";
 
 export const Header: React.FC = () => (
   <Nav>
@@ -17,8 +18,17 @@ export const Header: React.FC = () => (
     <Menu>
       <Link to="/song">Song</Link>
     </Menu>
-    <Menu>
-      <Link to="/create-song">Create Song</Link>
-    </Menu>
+    <Hide>
+      <Menu>
+        <Link to="/create-song-variation">Create Song Variation</Link>
+      </Menu>
+      <Menu>
+        <Link to="/create-song">Create Song</Link>
+      </Menu>
+    </Hide>
   </Nav>
 );
+
+export const Hide = styled.div`
+  display: none;
+`;

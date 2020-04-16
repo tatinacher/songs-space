@@ -1,5 +1,4 @@
 import { chordsKeys, chordColor, chordsSuffixes } from "../../constants/chords";
-import { getTextWidth } from "../measurement";
 import { ChordsType, LineType } from "../../constants/types";
 
 const removeDuplicates = (array: Array<boolean>) => {

@@ -14,3 +14,10 @@ export type ChordsType = {
   width: number;
   color: string;
 };
+
+export type SongsType = {
+  title: string;
+  author?: string;
+  album?: string;
+  _id: string;
+};

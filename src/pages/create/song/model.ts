@@ -1,4 +1,26 @@
-import { createStore } from "effector";
-import { SongType } from "../../../constants/types";
+import { createStore, createEvent, createEffect, sample } from "effector";
+import { SongsType } from "../../../constants/types";
+import { addSong } from "../../../api/songs";
+import { FormEvent } from "react";
 
-export const $song = createStore<SongType | null>(null);
+const emptySong = {
+  _id: "",
+  title: ""
+};
+
+export const submitForm = createEvent<FormEvent<HTMLFormElement>>();
+
+export const $song = createStore<SongsType>(emptySong);
+export const saveSong = createEffect<SongsType, void>();
+export const handleChange = createEvent<any>();
+$song.on(handleChange, (state, event) => {
+  return { ...state, [event.target.name]: event.target.value };
+});
+
+saveSong.use(addSong);
+
+sample({
+  source: $song,
+  clock: submitForm,
+  target: saveSong
+});

@@ -1,4 +1,5 @@
 import { request } from "../../lib/request";
+import { SongsType } from "../../constants/types";
 
 export type Song = {
   title: string;
@@ -56,4 +57,11 @@ export const saveSongVariation = (
     url: `/add-song-variation`,
     method: "post",
     params: songVariation
+  });
+
+export const addSong = (song: SongsType): Promise<void> =>
+  request({
+    url: `/add-song`,
+    method: "post",
+    params: song
   });

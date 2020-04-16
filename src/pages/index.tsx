@@ -1,4 +1,5 @@
-export { CreateSong } from "./create/variation";
+export { CreateSongVariation } from "./create/variation";
+export { CreateSong } from "./create/song";
 export { Song } from "./song";
 export { Main } from "./main";
 export { Band } from "./band";

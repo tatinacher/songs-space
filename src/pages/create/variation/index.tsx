@@ -13,7 +13,7 @@ import {
 } from "../../../features/authors";
 import { Line } from "../../../api/songs";
 
-export const CreateSong: React.FC = () => {
+export const CreateSongVariation: React.FC = () => {
   const { title, fullText, lyrics } = useStore($song);
   const authors = useStore($authors);
   const authorSongs = useStore($authorSongs);
