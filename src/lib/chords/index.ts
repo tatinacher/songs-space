@@ -137,7 +137,9 @@ export const setChords = (
   return { res, chordColor };
 };
 
-export const parseLyrics: (lyrics: string) => LineType[] = lyrics => {
+export const parseLyrics: (
+  lyrics: string
+) => { lyrics: LineType[]; chords: string[] } = lyrics => {
   const lines: LineType[] = [];
   const lyricLines = lyrics.split(/\r?\n/);
   const allChords = getAllChords(lyricLines);
@@ -165,6 +167,6 @@ export const parseLyrics: (lyrics: string) => LineType[] = lyrics => {
       previousColor = "";
     }
   }
-
-  return lines;
+  const lyricsChords = Array.from(allChords);
+  return { lyrics: lines, chords: lyricsChords };
 };

@@ -1,10 +1,11 @@
 import * as React from "react";
-import { SearchField, LastPlayed } from "../../ui";
+import { SearchField } from "../../ui";
 import { MainPage } from "./style";
+import { LastRecords } from "./last-records";
 
 export const Main: React.FC = () => (
   <MainPage>
     <SearchField />
-    <LastPlayed />
+    <LastRecords count={10} />
   </MainPage>
 );

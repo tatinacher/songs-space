@@ -2,15 +2,16 @@ import * as React from "react";
 import styled from "styled-components";
 import { useStore } from "effector-react";
 import { handleChange, $song, updateSong, submitForm } from "./model";
-import { Text, Textarea, Input, Chords, LyricsText } from "../../ui";
-import { Melody } from "../../assets/icons";
-import { parseLyrics } from "../../lib/chords";
+import { Text, Textarea, Input, Chords, LyricsText } from "../../../ui";
+import { Melody } from "../../../assets/icons";
+import { parseLyrics } from "../../../lib/chords";
 import {
   getAuthors,
   $authors,
   getAuthorSongs,
   $authorSongs
-} from "../../features/authors";
+} from "../../../features/authors";
+import { Line } from "../../../api/songs";
 
 export const CreateSong: React.FC = () => {
   const { title, fullText, lyrics } = useStore($song);
@@ -18,18 +19,18 @@ export const CreateSong: React.FC = () => {
   const authorSongs = useStore($authorSongs);
 
   const onClickHandler = React.useCallback(() => {
-    const lines = parseLyrics(fullText);
-    updateSong(lines);
+    const data = parseLyrics(fullText);
+    updateSong(data);
   }, [fullText]);
 
   const preview =
     lyrics && lyrics.length !== 0 ? (
       <div>
-        {lyrics.map((line, key) => (
-          <>
-            <Chords data={line.chords} key={key} />
+        {lyrics.map((line: Line, key: number) => (
+          <div key={key}>
+            <Chords data={line.chords} />
             <LyricsText>{line.text}</LyricsText>
-          </>
+          </div>
         ))}
       </div>
     ) : (

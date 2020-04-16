@@ -22,11 +22,20 @@ export type LyricChrods = {
 };
 
 export type SongVariation = {
+  _id?: string;
   title: string;
   fullText: string;
   lyrics: Line[];
   songId: string;
+  chords: string[];
 };
+
+export const fetchLastRecords = (count: number): Promise<SongVariation[]> =>
+  request({
+    url: "/last-records",
+    method: "get",
+    params: { count: count }
+  });
 
 export const fetchSongVariations = (songId: string): Promise<Song[]> =>
   request({
@@ -34,7 +43,7 @@ export const fetchSongVariations = (songId: string): Promise<Song[]> =>
     method: "get"
   });
 
-export const fetchLyricChrods = (id: string): Promise<LyricChrods> =>
+export const fetchLyricChrods = (id: string): Promise<SongVariation> =>
   request({
     url: `/variation/${id}`,
     method: "get"

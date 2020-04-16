@@ -1,8 +1,8 @@
 import { createStore, createEffect } from "effector";
-import { fetchLyricChrods, LyricChrods } from "../../api/songs";
+import { fetchLyricChrods, SongVariation } from "../../api/songs";
 
-export const getLyricChrods = createEffect<string, LyricChrods>();
-export const $lyricChords = createStore<LyricChrods | null>(null);
+export const getLyricChrods = createEffect<string, SongVariation>();
+export const $lyricChords = createStore<SongVariation | null>(null);
 
 getLyricChrods.use(fetchLyricChrods);
 

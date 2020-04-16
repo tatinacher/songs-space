@@ -1,12 +1,13 @@
 import { createStore, createEffect, createEvent, sample } from "effector";
-import { saveSongVariation, SongVariation } from "../../api/songs";
+import { saveSongVariation, SongVariation } from "../../../api/songs";
 import { FormEvent } from "react";
 
 export const SongVariationEmty = {
   title: "",
   fullText: "",
   lyrics: [],
-  songId: ""
+  songId: "",
+  chords: []
 };
 
 export const saveSong = createEffect<SongVariation, void>();
@@ -18,8 +19,8 @@ $song.on(handleChange, (state, event) => {
   return { ...state, [event.target.name]: event.target.value };
 });
 
-$song.on(updateSong, (state, chords) => {
-  return { ...state, lyrics: chords };
+$song.on(updateSong, (state, { lyrics, chords }) => {
+  return { ...state, lyrics, chords };
 });
 
 saveSong.use(saveSongVariation);
