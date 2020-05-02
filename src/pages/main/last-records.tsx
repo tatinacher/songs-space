@@ -16,12 +16,15 @@ export const LastRecords: React.FC<{ count: number }> = ({ count }) => {
   if (!lastSongs) return null;
   return (
     <>
-      <div>Last Songs:</div>
+      <Block>
+        <Big>Last</Big>
+        <Small>Songs</Small>
+      </Block>
       <LastSongs>
         {lastSongs.map((song, key) => (
-          <Link key={key} to={"/variation/" + song._id}>
+          <SongLink key={key} to={"/variation/" + song._id}>
             {song.title}
-          </Link>
+          </SongLink>
         ))}
       </LastSongs>
     </>
@@ -31,4 +34,35 @@ export const LastRecords: React.FC<{ count: number }> = ({ count }) => {
 export const LastSongs = styled.div`
   display: flex;
   flex-direction: column;
+  max-width: 300px;
+`;
+
+export const Big = styled.div`
+  font-weight: 700;
+`;
+
+export const Small = styled.div`
+  font-weight: 100;
+`;
+
+export const Block = styled.div`
+  display: flex;
+  padding: 5px 0;
+  font-weight: 200;
+  font-size: 21px;
+  text-decoration: underline;
+`;
+
+export const SongLink = styled(Link)`
+  text-decoration: none;
+  color: var(--primary);
+  padding-bottom: 20px;
+  position: relative;
+  ::after {
+    content: "•";
+    bottom: 0;
+    position: absolute;
+    left: 120px;
+    color: var(--accent);
+  }
 `;

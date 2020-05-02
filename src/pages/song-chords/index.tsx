@@ -3,14 +3,15 @@ import { useStore } from "effector-react";
 import { getLyricChrods, $lyricChords } from "../../features/song";
 import { useParams } from "react-router";
 import { SongVariation } from "../../api/songs";
-import { Title, Chords, LyricsText } from "../../ui";
-import { Lyrics } from "./style";
+import { Title, Chords, LyricsText, Switch } from "../../ui";
+import { Lyrics, ChordContainer, Mobile, Page, Switches } from "./style";
 import Chord from "@tombatossals/react-chords/lib/Chord";
 import * as ukuleleChords from "../../lib/chords/ukulele.json";
-import styled from "styled-components";
 
 export const SongChords: React.FC = () => {
   const { id } = useParams();
+  const [isChordsOn, setChrodsSwitch] = React.useState(false);
+  const [isLyricsOn, setLyricsSwitch] = React.useState(false);
   React.useEffect(() => {
     if (id) {
       getLyricChrods(id);
@@ -18,32 +19,49 @@ export const SongChords: React.FC = () => {
   }, [id]);
   const lyricChords: SongVariation | null = useStore($lyricChords);
   if (!lyricChords) return null;
-
   const { title, lyrics, chords } = lyricChords;
-  console.log(chords);
+
+  console.log(lyrics);
 
   return (
-    <div>
-      <Title>{title}</Title>
+    <Page>
       {chords && <Tab chords={chords} />}
-      <Lyrics>
-        {lyrics.map(({ chords, text }, key) => (
-          <div key={key}>
-            <Chords data={chords} key={key} />
-            <LyricsText>{text}</LyricsText>
-          </div>
-        ))}
-      </Lyrics>
-    </div>
+      <div>
+        <Title>{title}</Title>
+        <Switches>
+          <Switch
+            status={!isLyricsOn}
+            onClick={setLyricsSwitch}
+            text="Lyrics"
+            id="lyrics"
+          />
+          <Switch
+            status={!isChordsOn}
+            onClick={setChrodsSwitch}
+            text="Chords"
+            id="chords"
+          />
+        </Switches>
+
+        <Lyrics>
+          {lyrics.map(({ chords, text }, key) => (
+            <div key={key}>
+              {!isChordsOn && <Chords data={chords} key={key} />}
+              {!isLyricsOn && <LyricsText>{text}</LyricsText>}
+            </div>
+          ))}
+        </Lyrics>
+      </div>
+    </Page>
   );
 };
 
 export const Tab: React.FC<{ chords: string[] }> = ({ chords }) => (
-  <Top>
+  <Mobile>
     {chords.map((chord, key) => (
       <Display chordToDisplay={chord} key={key} />
     ))}
-  </Top>
+  </Mobile>
 );
 
 type T = any;
@@ -69,16 +87,3 @@ export const Display: React.FC<{ chordToDisplay: string }> = ({
     </ChordContainer>
   );
 };
-
-export const ChordContainer = styled.div`
-  width: 100px;
-  height: 100px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-export const Top = styled.div`
-  display: flex;
-  padding-bottom: 50px;
-`;

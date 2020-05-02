@@ -13,7 +13,9 @@ export const Menu = styled.li`
   font-weight: 400;
   a {
     text-decoration: none;
-    color: #1f271b;
+    color: var(--primary);
+    font-weight: 400;
+    cursor: pointer;
   }
   &:first-child {
     font-size: 25px;

@@ -9,3 +9,9 @@ ul {
     padding: 0;
     margin: 0;
 }
+
+:root {
+    --primary: #343434;
+    --main: #fff;
+    --accent: #ffc759
+}

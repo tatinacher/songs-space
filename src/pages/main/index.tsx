@@ -1,11 +1,13 @@
 import * as React from "react";
 import { SearchField } from "../../ui";
-import { MainPage } from "./style";
+import { MainPage, SearchBlock } from "./style";
 import { LastRecords } from "./last-records";
 
 export const Main: React.FC = () => (
   <MainPage>
-    <SearchField />
+    <SearchBlock>
+      <SearchField />
+    </SearchBlock>
     <LastRecords count={10} />
   </MainPage>
 );
