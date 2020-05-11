@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useStore } from "effector-react";
-import { $songTitle, $songText } from "../../features/song/model";
-import { $fontSize, setSize } from "../../features/visuals/model";
+import { $songTitle, $songText } from "features/song/model";
+import { $fontSize, setSize } from "features/visuals/model";
 import styled, { StyledComponent } from "styled-components";
 
 export const Song: React.FC = () => {

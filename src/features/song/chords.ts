@@ -1,5 +1,5 @@
 import { createStore, createEffect } from "effector";
-import { Song, fetchSongVariations } from "../../api/songs";
+import { Song, fetchSongVariations } from "api/songs";
 
 export const getSongVariations = createEffect<string, Song[]>();
 export const $songVariations = createStore<Song[]>([]);

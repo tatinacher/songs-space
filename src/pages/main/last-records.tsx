@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useStore } from "effector-react";
 import { $lastSongs, getLastRecords } from "./model";
-import { SongVariation } from "../../api/songs";
+import { SongVariation } from "api/songs";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -15,7 +15,7 @@ export const LastRecords: React.FC<{ count: number }> = ({ count }) => {
 
   if (!lastSongs) return null;
   return (
-    <>
+    <Container>
       <Block>
         <Big>Last</Big>
         <Small>Songs</Small>
@@ -27,7 +27,7 @@ export const LastRecords: React.FC<{ count: number }> = ({ count }) => {
           </SongLink>
         ))}
       </LastSongs>
-    </>
+    </Container>
   );
 };
 
@@ -65,4 +65,8 @@ export const SongLink = styled(Link)`
     left: 120px;
     color: var(--accent);
   }
+`;
+
+export const Container = styled.div`
+  padding: 10px 15px;
 `;

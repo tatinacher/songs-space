@@ -2,7 +2,7 @@ import * as React from "react";
 import { submitForm, handleChange } from "./model";
 import { useStore } from "effector-react";
 import { $song } from "./model";
-import { getAuthors, $authors } from "../../../features/authors";
+import { getAuthors, $authors } from "features/authors";
 
 export const CreateSong: React.FC = () => {
   const { title, author } = useStore($song);

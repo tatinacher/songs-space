@@ -1,6 +1,6 @@
 import { createStore, createEvent, createEffect, sample } from "effector";
-import { SongsType } from "../../../constants/types";
-import { addSong } from "../../../api/songs";
+import { SongsType } from "constants/types";
+import { addSong } from "api/songs";
 import { FormEvent } from "react";
 
 const emptySong = {

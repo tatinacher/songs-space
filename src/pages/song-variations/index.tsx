@@ -1,11 +1,11 @@
 import * as React from "react";
 import { useStore } from "effector-react";
-import { $songVariations, getSongVariations } from "../../features/song";
+import { $songVariations, getSongVariations } from "features/song";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
-import { Table } from "../../ui";
-import { Column } from "../../ui/organisms/table";
-import { Song } from "../../api/songs";
+import { Table } from "ui";
+import { Column } from "ui/organisms/table";
+import { Song } from "api/songs";
 
 type Variation = {
   title: React.ReactElement;

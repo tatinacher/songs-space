@@ -1,5 +1,5 @@
 import { createStore, createEffect, createEvent, sample } from "effector";
-import { saveSongVariation, SongVariation } from "../../../api/songs";
+import { saveSongVariation, SongVariation } from "api/songs";
 import { FormEvent } from "react";
 
 export const SongVariationEmty = {

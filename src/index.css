@@ -12,6 +12,8 @@ ul {
 
 :root {
     --primary: #343434;
-    --main: #fff;
-    --accent: #ffc759
+    --main: #f9fff5;
+    --accent: #ffc759;
+    --bg: #101027;
+
 }

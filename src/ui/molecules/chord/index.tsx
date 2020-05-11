@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
-import { getTextWidth } from "../../../lib/measurement";
-import { ChordsType } from "../../../constants/types";
+import { getTextWidth } from "lib/measurement";
+import { ChordsType } from "constants/types";
 
 export const Chords: React.FC<{ data?: ChordsType[] }> = ({ data }) => {
   if (!data) return null;

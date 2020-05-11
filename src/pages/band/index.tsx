@@ -3,13 +3,13 @@ import {
   $authorSongsPending,
   getAuthorSongs,
   $authorSongs
-} from "../../features/authors";
+} from "features/authors";
 import { useStore } from "effector-react";
-import { Table } from "../../ui";
-import { Column } from "../../ui/organisms/table";
+import { Table } from "ui";
+import { Column } from "ui/organisms/table";
 import { useParams } from "react-router";
-import { AuthorSongs } from "../../api/authors";
-import { Melody } from "../../assets/icons";
+import { AuthorSongs } from "api/authors";
+import { Melody } from "assets/icons";
 import { Title } from "./style";
 
 type Song = {

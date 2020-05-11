@@ -1,5 +1,5 @@
-import { request } from "../../lib/request";
-import { SongsType } from "../../constants/types";
+import { request } from "lib/request";
+import { SongsType } from "constants/types";
 
 export type Song = {
   title: string;

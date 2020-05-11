@@ -1,11 +1,6 @@
 import { createEffect, createStore } from "effector";
 
-import {
-  Author,
-  AuthorSongs,
-  fetchAuthors,
-  fetchAuthor
-} from "../../api/authors";
+import { Author, AuthorSongs, fetchAuthors, fetchAuthor } from "api/authors";
 
 export const getAuthors = createEffect<void, Author[]>();
 export const getAuthorSongs = createEffect<string, AuthorSongs>();

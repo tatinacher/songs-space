@@ -2,16 +2,16 @@ import * as React from "react";
 import styled from "styled-components";
 import { useStore } from "effector-react";
 import { handleChange, $song, updateSong, submitForm } from "./model";
-import { Text, Textarea, Input, Chords, LyricsText } from "../../../ui";
-import { Melody } from "../../../assets/icons";
-import { parseLyrics } from "../../../lib/chords";
+import { Text, Textarea, Input, Chords, LyricsText } from "ui";
+import { Melody } from "assets/icons";
+import { parseLyrics } from "lib/chords";
 import {
   getAuthors,
   $authors,
   getAuthorSongs,
   $authorSongs
-} from "../../../features/authors";
-import { Line } from "../../../api/songs";
+} from "features/authors";
+import { Line } from "api/songs";
 
 export const CreateSongVariation: React.FC = () => {
   const { title, fullText, lyrics } = useStore($song);

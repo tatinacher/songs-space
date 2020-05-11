@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
-import { ButtonPrimary } from "../../atoms";
+import { ButtonPrimary } from "ui/atoms";
 
 export const SearchField: React.FC = () => (
   <Search>
@@ -11,7 +11,6 @@ export const SearchField: React.FC = () => (
 
 export const Search = styled.div`
   padding: 0 20px 0 0;
-  display: flex;
   & > * {
     box-sizing: border-box;
   }
@@ -21,15 +20,19 @@ export const Input = styled.input`
   padding: 10px 20px;
   border-radius: 5px;
   border: 0;
+  font-weight: 300;
+  max-width: 190px;
   outline: none;
   font-size: 16px;
   margin-right: 5px;
-
+  background: transparent;
+  border: 1px solid #f9fff5;
+  appearance: none;
   :focus {
-    border: 4px solid var(--accent);
   }
 
   ::placeholder {
     font-weight: 100;
+    color: var(--main);
   }
 `;

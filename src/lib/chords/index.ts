@@ -1,5 +1,5 @@
-import { chordsKeys, chordColor, chordsSuffixes } from "../../constants/chords";
-import { ChordsType, LineType } from "../../constants/types";
+import { chordsKeys, chordColor, chordsSuffixes } from "constants/chords";
+import { ChordsType, LineType } from "constants/types";
 
 const removeDuplicates = (array: Array<boolean>) => {
   return array.filter((a, b) => array.indexOf(a) === b);

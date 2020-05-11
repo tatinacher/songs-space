@@ -1,8 +1,8 @@
 import * as React from "react";
-import { $authors, getAuthors } from "../../features/authors";
+import { $authors, getAuthors } from "features/authors";
 import { useStore } from "effector-react";
-import { Table } from "../../ui";
-import { Column } from "../../ui/organisms/table";
+import { Table } from "ui";
+import { Column } from "ui/organisms/table";
 import { Link } from "react-router-dom";
 
 type AuthorSong = {
