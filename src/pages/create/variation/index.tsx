@@ -17,6 +17,7 @@ export const CreateSongVariation: React.FC = () => {
   const { title, fullText, lyrics } = useStore($song);
   const authors = useStore($authors);
   const authorSongs = useStore($authorSongs);
+  const [fontSize, changeFontSize] = React.useState(14);
 
   const onClickHandler = React.useCallback(() => {
     const data = parseLyrics(fullText);
@@ -28,8 +29,8 @@ export const CreateSongVariation: React.FC = () => {
       <div>
         {lyrics.map((line: Line, key: number) => (
           <div key={key}>
-            <Chords data={line.chords} />
-            <LyricsText>{line.text}</LyricsText>
+            <Chords fontSize={fontSize} data={line.chords} />
+            <LyricsText fontSize={fontSize}>{line.text}</LyricsText>
           </div>
         ))}
       </div>
@@ -46,6 +47,8 @@ export const CreateSongVariation: React.FC = () => {
 
   return (
     <Song>
+      <button onClick={() => changeFontSize(fontSize + 1)}>+</button>
+      <button onClick={() => changeFontSize(fontSize - 1)}>-</button>
       <form onSubmit={submitForm}>
         <button type="submit">Сохранить</button>
         <div>

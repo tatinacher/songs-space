@@ -4,7 +4,14 @@ import { getLyricChrods, $lyricChords } from "features/song";
 import { useParams } from "react-router";
 import { SongVariation } from "api/songs";
 import { Title, Chords, LyricsText, Switch } from "ui";
-import { Lyrics, ChordContainer, Mobile, Page, Switches } from "./style";
+import {
+  Changes,
+  ChordContainer,
+  Lyrics,
+  Mobile,
+  Page,
+  Switches
+} from "./style";
 import Chord from "@tombatossals/react-chords/lib/Chord";
 import * as ukuleleChords from "lib/chords/ukulele.json";
 
@@ -18,15 +25,20 @@ export const SongChords: React.FC = () => {
     }
   }, [id]);
   const lyricChords: SongVariation | null = useStore($lyricChords);
+  const [fontSize, changeFontSize] = React.useState(14);
+
   if (!lyricChords) return null;
   const { title, lyrics, chords } = lyricChords;
-
-  console.log(lyrics);
 
   return (
     <Page>
       {chords && <Tab chords={chords} />}
       <div>
+        <Changes>
+          <button onClick={() => changeFontSize(fontSize + 1)}>+</button>
+          <button onClick={() => changeFontSize(fontSize - 1)}>-</button>
+        </Changes>
+
         <Title>{title}</Title>
         <Switches>
           <Switch
@@ -46,8 +58,12 @@ export const SongChords: React.FC = () => {
         <Lyrics>
           {lyrics.map(({ chords, text }, key) => (
             <div key={key}>
-              {!isChordsOn && <Chords data={chords} key={key} />}
-              {!isLyricsOn && <LyricsText>{text}</LyricsText>}
+              {!isChordsOn && (
+                <Chords data={chords} key={key} fontSize={fontSize} />
+              )}
+              {!isLyricsOn && (
+                <LyricsText fontSize={fontSize}>{text}</LyricsText>
+              )}
             </div>
           ))}
         </Lyrics>

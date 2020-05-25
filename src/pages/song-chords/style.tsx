@@ -30,3 +30,8 @@ export const Page = styled.div`
 export const Switches = styled.div`
   display: flex;
 `;
+
+export const Changes = styled.div`
+  display: flex;
+  display: none;
+`;

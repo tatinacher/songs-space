@@ -3,13 +3,21 @@ import styled from "styled-components";
 import { getTextWidth } from "lib/measurement";
 import { ChordsType } from "constants/types";
 
-export const Chords: React.FC<{ data?: ChordsType[] }> = ({ data }) => {
+export const Chords: React.FC<{ data?: ChordsType[]; fontSize: number }> = ({
+  data,
+  fontSize
+}) => {
   if (!data) return null;
   const textWidth = getTextWidth(" ", "14px Roboto Mono") || 1;
   return (
     <ChordLine>
       {data.map(({ width, name, color }, key) => (
-        <Chord key={key} width={width * textWidth} color={color}>
+        <Chord
+          key={key}
+          width={width * textWidth}
+          color={color}
+          fontSize={fontSize}
+        >
           {name}
         </Chord>
       ))}
@@ -17,10 +25,15 @@ export const Chords: React.FC<{ data?: ChordsType[] }> = ({ data }) => {
   );
 };
 
-export const Chord = styled.div<{ width: number; color: string }>`
+export const Chord = styled.div<{
+  width: number;
+  color: string;
+  fontSize: number;
+}>`
   width: ${props => props.width}px;
   /*background: ${props => props.color};*/
   font-size: 14px;
+  font-size: ${props => props.fontSize}px;
 `;
 
 export const ChordLine = styled.div`
