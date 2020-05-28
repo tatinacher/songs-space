@@ -6,13 +6,16 @@ const bodyParser = require("body-parser");
 const logger = require("morgan");
 const model = require("./data");
 var ObjectId = require("mongoose").Types.ObjectId;
+const { DB } = require("./config");
 
 const API_PORT = 3001;
 const app = express();
 app.use(cors());
 const router = express.Router();
 
-const dbRoute = "mongodb://localhost:27017/test";
+//const dbRoute = "mongodb://localhost:27017/test";
+
+const dbRoute = DB;
 
 mongoose.connect(dbRoute, { useNewUrlParser: true, useUnifiedTopology: true });
 

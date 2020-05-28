@@ -11,22 +11,23 @@ export const LastRecords: React.FC<{ count: number }> = ({ count }) => {
   React.useEffect(() => {
     getLastRecords(count);
   }, [count]);
-  console.log(lastSongs);
 
-  if (!lastSongs) return null;
+  const songs =
+    !lastSongs || lastSongs.length === 0
+      ? "No songs found"
+      : lastSongs.map((song, key) => (
+          <SongLink key={key} to={"/variation/" + song._id}>
+            {song.title}
+          </SongLink>
+        ));
+
   return (
     <Container>
       <Block>
         <Big>Last</Big>
         <Small>Songs</Small>
       </Block>
-      <LastSongs>
-        {lastSongs.map((song, key) => (
-          <SongLink key={key} to={"/variation/" + song._id}>
-            {song.title}
-          </SongLink>
-        ))}
-      </LastSongs>
+      <LastSongs>{songs}</LastSongs>
     </Container>
   );
 };
@@ -69,4 +70,5 @@ export const SongLink = styled(Link)`
 
 export const Container = styled.div`
   padding: 10px 15px;
+  flex: 50%;
 `;

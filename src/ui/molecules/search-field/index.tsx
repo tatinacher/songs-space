@@ -25,14 +25,13 @@ export const Input = styled.input`
   outline: none;
   font-size: 16px;
   margin-right: 5px;
-  background: transparent;
-  border: 1px solid #f9fff5;
+  background: #fff;
   appearance: none;
   :focus {
   }
 
   ::placeholder {
     font-weight: 100;
-    color: var(--main);
+    color: #444054;
   }
 `;

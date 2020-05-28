@@ -2,7 +2,7 @@ body {
     margin: 0;
     font-family: 'Roboto Mono', monospace;
     font-weight: 300;
-    background: #F6F7EB;
+    background: #fff;
 }
 
 ul {
@@ -15,5 +15,4 @@ ul {
     --main: #f9fff5;
     --accent: #ffc759;
     --bg: #101027;
-
 }

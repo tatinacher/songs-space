@@ -5,21 +5,27 @@ export const Nav = styled.nav`
   background: var(--bg);
   display: flex;
   justify-content: center;
+  border-bottom: 2px solid #d7263d;
 `;
 
 export const Menu = styled.li`
   list-style-type: none;
-  padding: 10px 15px;
   font-weight: 400;
   display: flex;
   align-items: center;
+  font-family: sans-serif;
   a {
+    padding: 10px 15px;
+
     text-decoration: none;
     color: var(--main);
     font-weight: 300;
     text-transform: uppercase;
     cursor: pointer;
     letter-spacing: 1px;
+  }
+  &:hover {
+    background: #d7263d;
   }
   &:first-child {
     font-size: 25px;

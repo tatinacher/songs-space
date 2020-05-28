@@ -4,6 +4,7 @@ import { useStore } from "effector-react";
 import { Table } from "ui";
 import { Column } from "ui/organisms/table";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 type AuthorSong = {
   author: React.ReactElement;
@@ -24,5 +25,13 @@ export const Bands: React.FC = () => {
       description: author.description
     };
   });
-  return <Table data={data} columns={column} />;
+  return (
+    <BandsBlock>
+      <Table data={data} columns={column} />
+    </BandsBlock>
+  );
 };
+
+export const BandsBlock = styled.div`
+  max-width: 300px;
+`;
