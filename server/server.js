@@ -8,7 +8,7 @@ const model = require("./data");
 var ObjectId = require("mongoose").Types.ObjectId;
 const { DB } = require("./config");
 
-const API_PORT = 3001;
+const API_PORT = process.env.PORT || 3000;
 const app = express();
 app.use(cors());
 const router = express.Router();
