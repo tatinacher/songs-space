@@ -17,7 +17,7 @@ const dbRoute = DB;
 mongoose.connect(dbRoute, { useNewUrlParser: true }, function(err) {
   if (err) return console.log(err);
   app.listen(3000, function() {
-    console.log("Сервер ожидает подключения...");
+    console.log("Server is listening");
   });
 });
 
