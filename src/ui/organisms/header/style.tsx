@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import { device } from "constants/breakpoints";
+import { Link } from "react-router-dom";
 
 export const Nav = styled.nav`
   background: var(--bg);
   display: flex;
   justify-content: center;
-  border-bottom: 2px solid #d7263d;
+  border-bottom: 2px solid var(--accent);
   position: relative;
 `;
 
@@ -25,7 +26,7 @@ export const Menu = styled.li`
     letter-spacing: 1px;
   }
   &:hover {
-    background: #d7263d;
+    background: var(--accent);
   }
   &:first-child {
     font-size: 25px;
@@ -36,6 +37,7 @@ export const Content = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
+  position: relative;
 
   @media ${device.tablet} {
     max-width: 350px;
@@ -56,7 +58,7 @@ export const MenuBlock = styled.div`
   display: flex;
 `;
 
-export const Item = styled.div`
+export const Item = styled(Link)`
   padding: 10px 15px;
   text-decoration: none;
   color: var(--main);
@@ -65,14 +67,4 @@ export const Item = styled.div`
   cursor: pointer;
   letter-spacing: 1px;
   font-size: 16px;
-`;
-
-export const Form = styled.div`
-  width: 200px;
-  height: 100px;
-  background: #fff;
-  position: absolute;
-  right: 0;
-  top: 55px;
-  padding: 15px;
 `;

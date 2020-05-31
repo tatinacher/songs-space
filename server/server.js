@@ -12,18 +12,14 @@ const API_PORT = 3001;
 const app = express();
 app.use(cors());
 const router = express.Router();
-
-//const dbRoute = "mongodb://localhost:27017/test";
-
 const dbRoute = DB;
 
-mongoose.connect(dbRoute, { useNewUrlParser: true, useUnifiedTopology: true });
-
-let db = mongoose.connection;
-
-db.once("open", () => console.log("connected to the database"));
-
-db.on("error", console.error.bind(console, "MongoDB connection error:"));
+mongoose.connect(dbRoute, { useNewUrlParser: true }, function(err) {
+  if (err) return console.log(err);
+  app.listen(3000, function() {
+    console.log("Сервер ожидает подключения...");
+  });
+});
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

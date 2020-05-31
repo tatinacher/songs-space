@@ -5,7 +5,7 @@ export const Textarea = styled.textarea`
   font-size: 14px;
   font-family: "Roboto Mono", monospace;
   font-weight: 300;
-  max-width: 500px;
+  max-width: 800px;
   width: 100%;
   height: 200px;
 `;

@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Content, Hide, Item, Menu, MenuBlock, Nav, Form } from "./style";
-import { Input, ButtonPrimary } from "ui/atoms";
+import { Content, Hide, Item, Menu, MenuBlock, Nav } from "./style";
 
 export const Header: React.FC = () => (
   <>
@@ -32,20 +31,10 @@ export const Header: React.FC = () => (
         </MenuBlock>
         <MenuBlock>
           <Menu>
-            <Item>Sign in</Item>
+            <Item to="/login">Sign in</Item>
           </Menu>
         </MenuBlock>
       </Content>
-      <LoginForm />
     </Nav>
   </>
-);
-
-export const LoginForm: React.FC = () => (
-  <Form>
-    <Input name="login" />
-    <Input type="password" />
-    <ButtonPrimary>Login</ButtonPrimary>
-    <div>SingUp</div>
-  </Form>
 );

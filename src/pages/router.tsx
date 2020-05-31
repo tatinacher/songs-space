@@ -1,4 +1,12 @@
-import { Bands, Band, Main, SongVariations, CreateSong, SongChords } from "./";
+import {
+  Bands,
+  Band,
+  Login,
+  Main,
+  SongVariations,
+  CreateSong,
+  SongChords
+} from "./";
 import { CreateSongVariation } from "./create/variation";
 
 export const routes = [
@@ -31,5 +39,9 @@ export const routes = [
   {
     path: "/create-song-variation",
     component: CreateSongVariation
+  },
+  {
+    path: "/login",
+    component: Login
   }
 ];

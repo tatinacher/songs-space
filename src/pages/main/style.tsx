@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import img from "assets/img/background2.jpg";
+import img from "assets/img/background.jpg";
 import { device } from "constants/breakpoints";
 
 export const MainPage = styled.div`

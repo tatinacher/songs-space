@@ -7,6 +7,10 @@ export const ButtonPrimary = styled.button`
   border-radius: 5px;
   font-size: 16px;
   letter-spacing: 1px;
-  background: #161126;
+  background: var(--bg);
   color: var(--main);
+  &:hover {
+    cursor: pointer;
+    background: var(--accent);
+  }
 `;
