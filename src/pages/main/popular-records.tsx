@@ -60,7 +60,7 @@ export const SongLink = styled(Link)`
   padding-bottom: 20px;
   position: relative;
   ::after {
-    content: "•";
+    /*content: "•";*/
     bottom: 0;
     position: absolute;
     left: 120px;

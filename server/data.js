@@ -32,7 +32,8 @@ const SongChordsSchema = new Schema(
         chords: [
           {
             name: String,
-            width: Number,
+            beforeSpaces: Number,
+            afterSpaces: Number,
             color: String
           }
         ]

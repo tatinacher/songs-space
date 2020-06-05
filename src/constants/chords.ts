@@ -13,24 +13,41 @@ export const chordsKeys = [
   "B"
 ];
 
+// export const chordColor: string[] = [
+//   "#E5FFDE",
+//   "#F5F1E3",
+//   "#FFAEA6",
+//   "#BBCBCB",
+//   "#087E8B",
+//   "#C17C74",
+//   "#FEFFBE",
+//   "#E5FFDE",
+//   "#FFAEA6",
+//   "#BBCBCB",
+//   "#C17C74",
+//   "#FEFFBE"
+// ];
+
 export const chordColor: string[] = [
-  "#E5FFDE",
-  "#F5F1E3",
-  "#FFAEA6",
-  "#BBCBCB",
-  "#087E8B",
-  "#C17C74",
-  "#FEFFBE",
-  "#E5FFDE",
-  "#FFAEA6",
-  "#BBCBCB",
-  "#C17C74",
-  "#FEFFBE"
+  "#264653",
+  "#2a9d8f",
+  "#e9c46a",
+  "#f4a261",
+  "#e76f51",
+  "#ef476f",
+  "#ffd166",
+  "#06d6a0",
+  "#118ab2",
+  "#073b4c",
+  "#003049",
+  "#d62828",
+  "#f77f00"
 ];
 
 export const chordsSuffixes = [
   "major",
   "minor",
+  "m",
   "dim",
   "dim7",
   "sus2",

@@ -10,32 +10,36 @@ export const Chords: React.FC<{ data?: ChordsType[]; fontSize: number }> = ({
   if (!data) return null;
   const textWidth = getTextWidth(" ", "14px Roboto Mono") || 1;
   return (
-    <ChordLine>
-      {data.map(({ width, name, color }, key) => (
-        <Chord
-          key={key}
-          width={width * textWidth}
-          color={color}
-          fontSize={fontSize}
-        >
-          {name}
-        </Chord>
+    <ChordLine fontSize={fontSize}>
+      {data.map((chord, key) => (
+        <Chord key={key} {...chord} />
       ))}
     </ChordLine>
   );
 };
 
-export const Chord = styled.div<{
-  width: number;
-  color: string;
+export const Chord: React.FC<ChordsType> = ({
+  beforeSpaces,
+  afterSpaces,
+  name,
+  color
+}) => {
+  let line = name;
+  if (beforeSpaces > 0) {
+    line = " ".repeat(beforeSpaces) + line;
+  }
+  if (afterSpaces > 0) {
+    line = line + " ".repeat(afterSpaces);
+  }
+  return <div style={{ color: color }}>{line}</div>;
+};
+
+export const ChordLine = styled.div<{
   fontSize: number;
 }>`
-  width: ${props => props.width}px;
-  /*background: ${props => props.color};*/
-  font-size: 14px;
-  font-size: ${props => props.fontSize}px;
-`;
-
-export const ChordLine = styled.div`
   display: flex;
+  white-space: pre-wrap;
+  font-size: 14px;
+  font-weight: bold;
+  font-size: ${props => props.fontSize}px;
 `;

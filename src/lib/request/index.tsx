@@ -9,7 +9,9 @@ export const request = async ({
   method,
   params = {}
 }: RequestProps): Promise<any> => {
-  const request = "http://localhost:3001/api" + url;
+  console.log(url);
+
+  const request = process.env.REACT_APP_HOST + "/api" + url;
   const headers = {
     "Content-Type": "application/json;charset=UTF-8",
     Accept: "application/json"

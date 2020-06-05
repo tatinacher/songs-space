@@ -41,6 +41,8 @@ export const CreateSongVariation: React.FC = () => {
         <Melody />
       </div>
     );
+
+  console.log(lyrics);
   React.useEffect(() => {
     getAuthors();
   }, []);

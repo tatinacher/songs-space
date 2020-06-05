@@ -1,5 +1,6 @@
 import { chordsKeys, chordColor, chordsSuffixes } from "constants/chords";
 import { ChordsType, LineType } from "constants/types";
+import { ChordLine } from "ui/molecules/chord";
 
 const removeDuplicates = (array: Array<boolean>) => {
   return array.filter((a, b) => array.indexOf(a) === b);
@@ -65,9 +66,10 @@ export const setColors = (chords: Set<string>) => {
   let index = 0;
   chords.forEach(chord => {
     res.add({
-      name: chord,
+      afterSpaces: 0,
+      beforeSpaces: 0,
       color: chordColor[index],
-      width: 0
+      name: chord
     });
     index += 1;
   });
@@ -94,44 +96,61 @@ export const setChords = (
   const res: Array<ChordsType> = [];
   const maxLendth =
     nextLine.length > line.length ? nextLine.length : line.length;
-
-  if (line.indexOf(chords[0]) !== 0) {
-    const position = line.indexOf(chords[0]);
-    res.push({
-      name: "",
-      width: position,
-      color: previousColor
-    });
-  }
+  let index = 0;
   let chordsLine = line;
 
-  for (let i = 0; i < chords.length - 1; i++) {
-    const chord = chordsLine.indexOf(chords[i]);
+  if (line.indexOf(chords[0]) !== 0) {
+    const name = chords[0];
+    const position = line.indexOf(name);
+    chordsLine = chordsLine.replace(name, " ".repeat(name.length));
+
+    const positionNext = line.indexOf(chords[1]);
+    res.push({
+      afterSpaces: positionNext - position - 1,
+      beforeSpaces: position,
+      color: previousColor || findColorByName(name, allChords),
+      name: name
+    });
+    index = 1;
+  }
+  console.log(chords.length);
+
+  for (let i = index; i < chords.length - 1; i++) {
+    const chordPosition = chordsLine.indexOf(chords[i]);
     const name = chords[i];
-    const nextcord = chordsLine.indexOf(chords[i + 1]);
-    const position = nextcord - chord + 1;
+    chordsLine = chordsLine.replace(name, " ".repeat(name.length));
+
+    const nextChordPosition = chordsLine.indexOf(chords[i + 1]);
+    const spases = nextChordPosition - chordPosition - name.length;
     const chordColor = findColorByName(name, allChords);
-
-    chordsLine =
-      chordsLine.slice(0, chord) +
-      " ".repeat(chords[i].length) +
-      chordsLine.slice(chord + chords[i].length, maxLendth);
-
     res.push({
       name: name,
-      width: position,
+      beforeSpaces: 0,
+      afterSpaces: spases,
       color: chordColor
     });
+
+    console.log(
+      chords[i],
+      chords[i + 1],
+      chordPosition,
+      nextChordPosition,
+      spases,
+      chordsLine
+    );
   }
-  const chordposition = chordsLine.indexOf(chords[chords.length - 1]);
   const name = chords[chords.length - 1];
   const chordColor = findColorByName(name, allChords);
 
-  res.push({
-    name: name,
-    width: maxLendth - chordposition,
-    color: chordColor
-  });
+  if (chords.length > 1) {
+    res.push({
+      name: name,
+      beforeSpaces: 0,
+      afterSpaces:
+        maxLendth - chordsLine.indexOf(chords[chords.length - 2]) - name.length,
+      color: chordColor
+    });
+  }
 
   return { res, chordColor };
 };

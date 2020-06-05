@@ -1,19 +1,13 @@
 import { request } from "lib/request";
-import { SongsType } from "constants/types";
+import { SongsType, ChordsType } from "constants/types";
 
 export type Song = {
   title: string;
   id: string;
 };
 
-export type Chord = {
-  width: number;
-  color: string;
-  name: string;
-};
-
 export type Line = {
-  chords: Chord[];
+  chords: ChordsType[];
   text: string;
 };
 

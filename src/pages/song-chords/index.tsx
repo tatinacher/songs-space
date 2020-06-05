@@ -25,6 +25,9 @@ export const SongChords: React.FC = () => {
     }
   }, [id]);
   const lyricChords: SongVariation | null = useStore($lyricChords);
+
+  console.log(lyricChords);
+
   const [fontSize, changeFontSize] = React.useState(14);
 
   if (!lyricChords) return null;

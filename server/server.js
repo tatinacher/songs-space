@@ -8,7 +8,7 @@ const model = require("./data");
 var ObjectId = require("mongoose").Types.ObjectId;
 const { DB } = require("./config");
 
-const API_PORT = process.env.PORT || 3000;
+const API_PORT = process.env.PORT || 3001;
 const app = express();
 app.use(cors());
 const router = express.Router();
@@ -185,7 +185,7 @@ router.post("/add-song-variation", (req, res) => {
 
 app.use("/api", router);
 
-const publicPath = path.join(__dirname, "..", "build");
+const publicPath = path.join(__dirname, "build");
 app.use(express.static(publicPath));
 
 app.get("*", (req, res) => {

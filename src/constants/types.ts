@@ -11,7 +11,8 @@ export type LineType = {
 
 export type ChordsType = {
   name: string;
-  width: number;
+  beforeSpaces: number;
+  afterSpaces: number;
   color: string;
 };
 
