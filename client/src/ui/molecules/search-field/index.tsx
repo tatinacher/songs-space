@@ -2,12 +2,15 @@ import * as React from "react";
 import styled from "styled-components";
 import { ButtonPrimary } from "ui/atoms";
 
-export const SearchField: React.FC = () => (
-  <Search>
-    <Input placeholder="search" />
-    <ButtonPrimary>Search</ButtonPrimary>
-  </Search>
-);
+export const SearchField: React.FC = () => {
+  const onSubmit = () => {};
+  return (
+    <Search>
+      <Input placeholder="search" />
+      <ButtonPrimary onClick={onSubmit}>Search</ButtonPrimary>
+    </Search>
+  );
+};
 
 export const Search = styled.div`
   padding: 0 20px 0 0;
