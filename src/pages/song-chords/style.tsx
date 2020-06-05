@@ -21,10 +21,12 @@ export const Mobile = styled.div`
   display: flex;
   flex-direction: column;
   background: white;
+  display: none;
 `;
 
 export const Page = styled.div`
   display: flex;
+  overflow: hidden;
 `;
 
 export const Switches = styled.div`
@@ -33,5 +35,9 @@ export const Switches = styled.div`
 
 export const Changes = styled.div`
   display: flex;
+  display: none;
+`;
+
+export const ChordsList = styled.div`
   display: none;
 `;

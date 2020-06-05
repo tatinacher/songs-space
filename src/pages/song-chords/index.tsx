@@ -7,6 +7,7 @@ import { Title, Chords, LyricsText, Switch } from "ui";
 import {
   Changes,
   ChordContainer,
+  ChordsList,
   Lyrics,
   Mobile,
   Page,
@@ -14,6 +15,17 @@ import {
 } from "./style";
 import Chord from "@tombatossals/react-chords/lib/Chord";
 import * as ukuleleChords from "lib/chords/ukulele.json";
+import { ChordsType } from "constants/types";
+import { cutText } from "lib/chords/fitChords";
+
+interface ChordsAndTextProps {
+  chords: ChordsType[];
+  fontSize: number;
+  isChordsOn: boolean;
+  isLyricsOn: boolean;
+  maxSize: number;
+  text: string;
+}
 
 export const SongChords: React.FC = () => {
   const { id } = useParams();
@@ -25,13 +37,14 @@ export const SongChords: React.FC = () => {
     }
   }, [id]);
   const lyricChords: SongVariation | null = useStore($lyricChords);
-
-  console.log(lyricChords);
-
   const [fontSize, changeFontSize] = React.useState(14);
 
   if (!lyricChords) return null;
   const { title, lyrics, chords } = lyricChords;
+
+  const maxSize = (window.innerWidth - 30) / (fontSize - 5);
+
+  console.log(maxSize);
 
   return (
     <Page>
@@ -59,20 +72,50 @@ export const SongChords: React.FC = () => {
         </Switches>
 
         <Lyrics>
-          {lyrics.map(({ chords, text }, key) => (
-            <div key={key}>
-              {!isChordsOn && (
-                <Chords data={chords} key={key} fontSize={fontSize} />
-              )}
-              {!isLyricsOn && (
-                <LyricsText fontSize={fontSize}>{text}</LyricsText>
-              )}
-            </div>
+          {lyrics.map((lyricLine, key) => (
+            <ChordsAndText
+              {...lyricLine}
+              key={key}
+              maxSize={maxSize}
+              fontSize={fontSize}
+              isChordsOn
+              isLyricsOn
+            />
           ))}
         </Lyrics>
       </div>
     </Page>
   );
+};
+
+export const ChordsAndText: React.FC<ChordsAndTextProps> = ({
+  chords,
+  fontSize,
+  isChordsOn,
+  isLyricsOn,
+  maxSize,
+  text
+}) => {
+  if (text.length > maxSize) {
+    const lines = cutText(text, chords, maxSize);
+    return (
+      <div>
+        {lines.map(({ chords, text }) => (
+          <div>
+            {isChordsOn && <Chords data={chords} fontSize={fontSize} />}
+            {isLyricsOn && <LyricsText fontSize={fontSize}>{text}</LyricsText>}
+          </div>
+        ))}
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        {isChordsOn && <Chords data={chords} fontSize={fontSize} />}
+        {isLyricsOn && <LyricsText fontSize={fontSize}>{text}</LyricsText>}
+      </div>
+    );
+  }
 };
 
 export const Tab: React.FC<{ chords: string[] }> = ({ chords }) => (
