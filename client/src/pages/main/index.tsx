@@ -1,5 +1,5 @@
 import * as React from "react";
-import { SearchField } from "ui";
+import { SearchField, Title } from "ui";
 import { Background, Content, MainPage, SearchBlock } from "./style";
 import { LastRecords } from "./last-records";
 import { PopularRecords } from "./popular-records";
@@ -8,6 +8,7 @@ export const Main: React.FC = () => (
   <MainPage>
     <Background>
       <Content>
+        <Title>Learn you fav songs</Title>
         <SearchBlock>
           <SearchField />
         </SearchBlock>

@@ -6,12 +6,12 @@ import { Text, Textarea, Input, Chords, LyricsText } from "ui";
 import { Melody } from "assets/icons";
 import { parseLyrics } from "lib/chords";
 import {
-  getAuthors,
   $authors,
-  getAuthorSongs,
-  $authorSongs
+  $authorSongs,
+  getAuthors,
+  getAuthorSongs
 } from "features/authors";
-import { Line } from "api/songs";
+import { Line } from "constants/types";
 
 export const CreateSongVariation: React.FC = () => {
   const { title, fullText, lyrics } = useStore($song);

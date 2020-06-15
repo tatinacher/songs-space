@@ -1,29 +1,5 @@
 import { request } from "lib/request";
-import { SongsType, ChordsType } from "constants/types";
-
-export type Song = {
-  title: string;
-  id: string;
-};
-
-export type Line = {
-  chords: ChordsType[];
-  text: string;
-};
-
-export type LyricChrods = {
-  title: string;
-  lyrics: Line[];
-};
-
-export type SongVariation = {
-  _id?: string;
-  title: string;
-  fullText: string;
-  lyrics: Line[];
-  songId: string;
-  chords: string[];
-};
+import { SongsType, SongVariation, Song } from "constants/types";
 
 export const fetchLastRecords = (count: number): Promise<SongVariation[]> =>
   request({

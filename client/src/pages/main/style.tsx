@@ -10,13 +10,22 @@ export const MainPage = styled.div`
 
 export const SearchBlock = styled.div`
   margin: 10px 15px;
-  padding: 40px 0;
+  height: 200px;
   display: flex;
   width: 100%;
+  justify-content: center;
+  align-items: center;
+  @media ${device.tablet} {
+    height: 360px;
+  }
+  @media ${device.desktop} {
+    height: 460px;
+  }
 `;
 
 export const Background = styled.div`
   width: 100%;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,6 +44,6 @@ export const Content = styled.div`
     max-width: 1000px;
     width: 100%;
     display: flex;
-    padding-top: 40px;
+    flex-direction: column;
   }
 `;

@@ -1,9 +1,9 @@
 import * as React from "react";
 import { useStore } from "effector-react";
 import { $lastSongs, getLastRecords } from "./model";
-import { SongVariation } from "api/songs";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { SongVariation } from "constants/types";
 
 export const LastRecords: React.FC<{ count: number }> = ({ count }) => {
   const lastSongs: SongVariation[] | null = useStore($lastSongs);

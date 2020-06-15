@@ -37,7 +37,3 @@ export const Changes = styled.div`
   display: flex;
   display: none;
 `;
-
-export const ChordsList = styled.div`
-  display: none;
-`;

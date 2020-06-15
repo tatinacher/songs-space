@@ -8,6 +8,9 @@ export const Nav = styled.nav`
   justify-content: center;
   border-bottom: 2px solid var(--accent);
   position: relative;
+  position: fixed;
+  width: 100%;
+  z-index: 1;
 `;
 
 export const Menu = styled.li`

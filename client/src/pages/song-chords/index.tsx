@@ -2,12 +2,10 @@ import * as React from "react";
 import { useStore } from "effector-react";
 import { getLyricChrods, $lyricChords } from "features/song";
 import { useParams } from "react-router";
-import { SongVariation } from "api/songs";
 import { Title, Chords, LyricsText, Switch } from "ui";
 import {
   Changes,
   ChordContainer,
-  ChordsList,
   Lyrics,
   Mobile,
   Page,
@@ -15,7 +13,7 @@ import {
 } from "./style";
 import Chord from "@tombatossals/react-chords/lib/Chord";
 import * as ukuleleChords from "lib/chords/ukulele.json";
-import { ChordsType } from "constants/types";
+import { ChordsType, SongVariation } from "constants/types";
 import { cutText } from "lib/chords/fitChords";
 
 interface ChordsAndTextProps {

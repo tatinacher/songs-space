@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { device } from "constants/breakpoints";
 
 export const ButtonPrimary = styled.button`
   padding: 10px 15px;
@@ -9,8 +10,16 @@ export const ButtonPrimary = styled.button`
   letter-spacing: 1px;
   background: var(--bg);
   color: var(--main);
+  outline: none;
+  font-family: "Roboto Mono";
+
   &:hover {
     cursor: pointer;
     background: var(--accent);
+  }
+
+  @media ${device.desktop} {
+    font-size: 20px;
+    padding: 15px 25px;
   }
 `;

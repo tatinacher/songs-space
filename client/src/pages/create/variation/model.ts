@@ -1,6 +1,6 @@
 import { createStore, createEffect, createEvent, sample } from "effector";
-import { saveSongVariation, SongVariation } from "api/songs";
-import { FormEvent } from "react";
+import { saveSongVariation } from "api/songs";
+import { SongVariation } from "constants/types";
 
 export const SongVariationEmty = {
   title: "",
@@ -14,7 +14,7 @@ export const saveSong = createEffect<SongVariation, void>();
 export const handleChange = createEvent<any>();
 export const $song = createStore<SongVariation>(SongVariationEmty);
 export const updateSong = createEvent<any>();
-export const submitForm = createEvent<FormEvent<HTMLFormElement>>();
+export const submitForm = createEvent<React.FormEvent<HTMLFormElement>>();
 $song.on(handleChange, (state, event) => {
   return { ...state, [event.target.name]: event.target.value };
 });

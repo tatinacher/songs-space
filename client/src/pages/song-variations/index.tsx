@@ -5,7 +5,7 @@ import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { Table } from "ui";
 import { Column } from "ui/organisms/table";
-import { Song } from "api/songs";
+import { Song } from "constants/types";
 
 type Variation = {
   title: React.ReactElement;
