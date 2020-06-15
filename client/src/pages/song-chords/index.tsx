@@ -27,8 +27,8 @@ interface ChordsAndTextProps {
 
 export const SongChords: React.FC = () => {
   const { id } = useParams();
-  const [isChordsOn, setChrodsSwitch] = React.useState(false);
-  const [isLyricsOn, setLyricsSwitch] = React.useState(false);
+  const [isChordsOn, setChrodsSwitch] = React.useState(true);
+  const [isLyricsOn, setLyricsSwitch] = React.useState(true);
   React.useEffect(() => {
     if (id) {
       getLyricChrods(id);
@@ -56,13 +56,13 @@ export const SongChords: React.FC = () => {
         <Title>{title}</Title>
         <Switches>
           <Switch
-            status={!isLyricsOn}
+            status={isLyricsOn}
             onClick={setLyricsSwitch}
             text="Lyrics"
             id="lyrics"
           />
           <Switch
-            status={!isChordsOn}
+            status={isChordsOn}
             onClick={setChrodsSwitch}
             text="Chords"
             id="chords"
@@ -76,8 +76,8 @@ export const SongChords: React.FC = () => {
               key={key}
               maxSize={maxSize}
               fontSize={fontSize}
-              isChordsOn
-              isLyricsOn
+              isChordsOn={isChordsOn}
+              isLyricsOn={isLyricsOn}
             />
           ))}
         </Lyrics>
@@ -100,7 +100,13 @@ export const ChordsAndText: React.FC<ChordsAndTextProps> = ({
       <div>
         {lines.map(({ chords, text }) => (
           <div>
-            {isChordsOn && <Chords data={chords} fontSize={fontSize} />}
+            {isChordsOn && (
+              <Chords
+                showSpaces={isLyricsOn}
+                data={chords}
+                fontSize={fontSize}
+              />
+            )}
             {isLyricsOn && <LyricsText fontSize={fontSize}>{text}</LyricsText>}
           </div>
         ))}
@@ -109,7 +115,9 @@ export const ChordsAndText: React.FC<ChordsAndTextProps> = ({
   } else {
     return (
       <div>
-        {isChordsOn && <Chords data={chords} fontSize={fontSize} />}
+        {isChordsOn && (
+          <Chords showSpaces={isLyricsOn} data={chords} fontSize={fontSize} />
+        )}
         {isLyricsOn && <LyricsText fontSize={fontSize}>{text}</LyricsText>}
       </div>
     );

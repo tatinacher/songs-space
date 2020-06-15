@@ -3,17 +3,27 @@ import styled from "styled-components";
 import { getTextWidth } from "lib/measurement";
 import { ChordsType } from "constants/types";
 
-export const Chords: React.FC<{ data?: ChordsType[]; fontSize: number }> = ({
+interface ChordsProps {
+  data?: ChordsType[];
+  fontSize: number;
+  showSpaces?: boolean;
+}
+
+export const Chords: React.FC<ChordsProps> = ({
   data,
-  fontSize
+  fontSize,
+  showSpaces
 }) => {
   if (!data) return null;
-  const textWidth = getTextWidth(" ", "14px Roboto Mono") || 1;
   return (
     <ChordLine fontSize={fontSize}>
-      {data.map((chord, key) => (
-        <Chord key={key} {...chord} />
-      ))}
+      {data.map((chord, key) => {
+        if (!showSpaces) {
+          chord.afterSpaces = 10 - chord.name.length;
+          chord.beforeSpaces = 0;
+        }
+        return <Chord key={key} {...chord} />;
+      })}
     </ChordLine>
   );
 };

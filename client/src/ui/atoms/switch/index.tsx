@@ -14,7 +14,7 @@ export const Switch: React.FC<SwitchProps> = ({
 }) => (
   <div>
     <input
-      onClick={() => onClick(status)}
+      onClick={() => onClick(!status)}
       type="checkbox"
       id={id}
       checked={status}
