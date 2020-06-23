@@ -3,7 +3,7 @@ import { device } from "constants/breakpoints";
 import { Link } from "react-router-dom";
 
 export const Nav = styled.nav`
-  background: var(--bg);
+  /*background: var(--bg);*/
   display: flex;
   justify-content: center;
   border-bottom: 2px solid var(--accent);
@@ -11,6 +11,8 @@ export const Nav = styled.nav`
   position: fixed;
   width: 100%;
   z-index: 1;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(173, 150, 150, 0.5);
 `;
 
 export const Menu = styled.li`
@@ -18,19 +20,21 @@ export const Menu = styled.li`
   font-weight: 400;
   display: flex;
   align-items: center;
-  font-family: sans-serif;
   a {
     padding: 10px 15px;
     text-decoration: none;
-    color: var(--main);
+    color: var(--bg);
     font-weight: 300;
-    text-transform: uppercase;
     cursor: pointer;
     letter-spacing: 1px;
   }
   &:hover {
     background: var(--accent);
+    a {
+      color: var(--main);
+    }
   }
+
   &:first-child {
     font-size: 25px;
   }
@@ -66,7 +70,6 @@ export const Item = styled(Link)`
   text-decoration: none;
   color: var(--main);
   font-weight: 300;
-  text-transform: uppercase;
   cursor: pointer;
   letter-spacing: 1px;
   font-size: 16px;

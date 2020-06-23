@@ -2,19 +2,22 @@ import * as React from "react";
 import { useStore } from "effector-react";
 import { getLyricChrods, $lyricChords } from "features/song";
 import { useParams } from "react-router";
-import { Title, Chords, LyricsText, Switch } from "ui";
+import { SongTitle, Chords, LyricsText, Switch } from "ui";
 import {
   Changes,
   ChordContainer,
+  ChordsScheme,
   Lyrics,
-  Mobile,
   Page,
-  Switches
+  Switches,
+  SwitchBlock
 } from "./style";
 import Chord from "@tombatossals/react-chords/lib/Chord";
-import * as ukuleleChords from "lib/chords/ukulele.json";
+import * as ukulele from "lib/chords/ukulele.json";
+import * as guitar from "lib/chords/guitar.json";
 import { ChordsType, SongVariation } from "constants/types";
 import { cutText } from "lib/chords/fitChords";
+import { $isGuitar, changeInstrument } from "./model";
 
 interface ChordsAndTextProps {
   chords: ChordsType[];
@@ -25,10 +28,55 @@ interface ChordsAndTextProps {
   text: string;
 }
 
+interface DisplayProps {
+  chordToDisplay: string;
+}
+
+interface TabProps {
+  chords: string[];
+}
+
+const showChords = (
+  chords: any,
+  main: any,
+  tunings: any,
+  chordToDisplay: string
+) => {
+  const mains: keyof T = chordToDisplay.slice(0, 1);
+  const suffix =
+    chordToDisplay.slice(1) === "" || chordToDisplay.slice(1) === "m"
+      ? "major"
+      : chordToDisplay.slice(1);
+
+  const allUkulelechords: T = chords;
+  const chordsOfInstrument = {
+    ...main,
+    tunings
+  };
+
+  try {
+    const chord = allUkulelechords[mains].find(
+      (el: any) => el.suffix === suffix
+    );
+    if (!chord) return null;
+
+    return (
+      <ChordContainer>
+        <div>{chordToDisplay}</div>
+        <Chord chord={chord.positions[0]} instrument={chordsOfInstrument} />
+      </ChordContainer>
+    );
+  } catch (error) {
+    return null;
+  }
+};
+
 export const SongChords: React.FC = () => {
   const { id } = useParams();
   const [isChordsOn, setChrodsSwitch] = React.useState(true);
   const [isLyricsOn, setLyricsSwitch] = React.useState(true);
+
+  const isGuitar = useStore($isGuitar);
   React.useEffect(() => {
     if (id) {
       getLyricChrods(id);
@@ -39,10 +87,7 @@ export const SongChords: React.FC = () => {
 
   if (!lyricChords) return null;
   const { title, lyrics, chords } = lyricChords;
-
   const maxSize = (window.innerWidth - 30) / (fontSize - 5);
-
-  console.log(maxSize);
 
   return (
     <Page>
@@ -52,21 +97,21 @@ export const SongChords: React.FC = () => {
           <button onClick={() => changeFontSize(fontSize + 1)}>+</button>
           <button onClick={() => changeFontSize(fontSize - 1)}>-</button>
         </Changes>
-
-        <Title>{title}</Title>
+        <SwitchBlock>
+          Ukulele
+          <Switch
+            status={isGuitar}
+            onClick={() => changeInstrument()}
+            id="instrument"
+          />
+          Guitar
+        </SwitchBlock>
+        <SongTitle>{title}</SongTitle>
         <Switches>
-          <Switch
-            status={isLyricsOn}
-            onClick={setLyricsSwitch}
-            text="Lyrics"
-            id="lyrics"
-          />
-          <Switch
-            status={isChordsOn}
-            onClick={setChrodsSwitch}
-            text="Chords"
-            id="chords"
-          />
+          <Switch status={isLyricsOn} onClick={setLyricsSwitch} id="lyrics" />{" "}
+          Lyrics
+          <Switch status={isChordsOn} onClick={setChrodsSwitch} id="chords" />
+          Chords
         </Switches>
 
         <Lyrics>
@@ -124,34 +169,32 @@ export const ChordsAndText: React.FC<ChordsAndTextProps> = ({
   }
 };
 
-export const Tab: React.FC<{ chords: string[] }> = ({ chords }) => (
-  <Mobile>
+export const Tab: React.FC<TabProps> = ({ chords }) => (
+  <ChordsScheme>
     {chords.map((chord, key) => (
       <Display chordToDisplay={chord} key={key} />
     ))}
-  </Mobile>
+  </ChordsScheme>
 );
 
 type T = any;
 
-export const Display: React.FC<{ chordToDisplay: string }> = ({
-  chordToDisplay
-}) => {
-  const allUkulelechords: T = ukuleleChords.chords;
+export const Display: React.FC<DisplayProps> = ({ chordToDisplay }) => {
+  const isGuitar = useStore($isGuitar);
 
-  const main: keyof T = chordToDisplay.slice(0, 1);
-  const suffix =
-    chordToDisplay.slice(1) === "" ? "major" : chordToDisplay.slice(1);
-
-  const instrument = { ...ukuleleChords.main, tunings: ukuleleChords.tunings };
-  const chord = allUkulelechords[main].find((el: any) => el.suffix === suffix);
-  if (!chord) return null;
-  console.log(suffix, allUkulelechords[main], chord, allUkulelechords);
-
-  return (
-    <ChordContainer>
-      <div>{chordToDisplay}</div>
-      <Chord chord={chord.positions[0]} instrument={instrument} />
-    </ChordContainer>
-  );
+  if (isGuitar) {
+    return showChords(
+      guitar.chords,
+      guitar.main,
+      guitar.tunings,
+      chordToDisplay
+    );
+  } else {
+    return showChords(
+      ukulele.chords,
+      ukulele.main,
+      ukulele.tunings,
+      chordToDisplay
+    );
+  }
 };

@@ -52,6 +52,7 @@ export const Block = styled.div`
   font-weight: 200;
   font-size: 21px;
   text-decoration: underline;
+  padding-bottom: 30px;
 `;
 
 export const SongLink = styled(Link)`

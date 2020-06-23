@@ -5,4 +5,4 @@ export { LyricsText } from "./lyrics-text";
 export { Text } from "./text";
 export { Textarea } from "./textarea";
 export { Switch } from "./switch";
-export { Title } from "./title";
+export { Title, SongTitle } from "./title";

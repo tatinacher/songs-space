@@ -1,6 +1,5 @@
 import * as React from "react";
 import styled from "styled-components";
-import { getTextWidth } from "lib/measurement";
 import { ChordsType } from "constants/types";
 
 interface ChordsProps {

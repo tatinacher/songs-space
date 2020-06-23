@@ -1,6 +1,5 @@
 import { chordsKeys, chordColor, chordsSuffixes } from "constants/chords";
 import { ChordsType, LineType } from "constants/types";
-import { ChordLine } from "ui/molecules/chord";
 
 const removeDuplicates = (array: Array<boolean>) => {
   return array.filter((a, b) => array.indexOf(a) === b);

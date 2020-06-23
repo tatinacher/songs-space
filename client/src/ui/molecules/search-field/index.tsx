@@ -12,7 +12,9 @@ import { Link } from "react-router-dom";
 import { device } from "constants/breakpoints";
 import searchIcon from "assets/icons/icons8-search.svg";
 
-export const SearchField: React.FC = () => {
+export const SearchField: React.FC<{ placeholder: string }> = ({
+  placeholder
+}) => {
   const song = useStore($searchRequest);
   const searchResult = useStore($searchResponse);
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -22,11 +24,7 @@ export const SearchField: React.FC = () => {
   return (
     <SearchBlock>
       <Search onSubmit={onSubmit}>
-        <Input
-          value={song}
-          onChange={handleChange}
-          placeholder="Something goood..."
-        />
+        <Input value={song} onChange={handleChange} placeholder={placeholder} />
         <SearchButton>
           <ButtonIcon icon={searchIcon} />
         </SearchButton>
@@ -43,6 +41,8 @@ export const SearchField: React.FC = () => {
 export const Search = styled.form`
   padding: 0 20px 0 0;
   position: relative;
+  display: flex;
+  flex-direction: column;
 
   & > * {
     box-sizing: border-box;
@@ -108,9 +108,6 @@ export const Result = styled(Link)`
 export const SearchBlock = styled.div`
   display: flex;
   flex-direction: column;
-  @media ${device.desktop} {
-    flex-direction: row;
-  }
 `;
 
 export const SearchButton = styled.div`

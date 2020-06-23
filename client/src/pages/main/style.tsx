@@ -13,14 +13,7 @@ export const SearchBlock = styled.div`
   height: 200px;
   display: flex;
   width: 100%;
-  justify-content: center;
-  align-items: center;
-  @media ${device.tablet} {
-    height: 360px;
-  }
-  @media ${device.desktop} {
-    height: 460px;
-  }
+  flex-direction: column;
 `;
 
 export const Background = styled.div`
@@ -38,12 +31,28 @@ export const Background = styled.div`
 
 export const Content = styled.div`
   @media ${device.tablet} {
-    max-width: 350px;
+    width: 700px;
   }
   @media ${device.desktop} {
     max-width: 1000px;
     width: 100%;
     display: flex;
     flex-direction: column;
+  }
+`;
+
+export const ContentSongs = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  @media ${device.tablet} {
+    width: 700px;
+    flex-direction: row;
+    padding-top: 30px;
+  }
+  @media ${device.desktop} {
+    max-width: 1000px;
+    width: 100%;
+    padding-top: 60px;
   }
 `;
