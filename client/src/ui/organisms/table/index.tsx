@@ -2,34 +2,38 @@ import * as React from "react";
 import { Row, TableContainer, Thead } from "./style";
 
 export type Column<T> = {
-  name: string;
+  name: React.ReactElement | string;
   key: keyof T;
 };
 
-interface TableProps<T> {
+interface TableProps<T, U> {
   columns: Column<T>[];
-  data: T[];
+  data: U[];
 }
 
-interface TableBodyProps<T> {
-  rows: T;
+interface TableBodyProps<T, U> {
+  rows: any;
   columns: Column<T>[];
 }
 
-export const TableBody: <T>(
-  props: TableBodyProps<T>
-) => React.ReactElement<TableBodyProps<T>> = ({ rows, columns }) => (
-  <tr>
-    {columns.map((column, key) => (
-      <Row key={key}>{rows[column.key]}</Row>
-    ))}
-  </tr>
-);
+export const TableBody: <T, U>(
+  props: TableBodyProps<T, U>
+) => React.ReactElement<TableBodyProps<T, U>> = ({ rows, columns }) => {
+  return (
+    <tr>
+      {columns.map((column, key) => (
+        <Row key={key}>{rows[column.key]}</Row>
+      ))}
+    </tr>
+  );
+};
 
-export const Table: <T>(
-  props: TableProps<T>
-) => React.ReactElement<TableProps<T>> = ({ columns, data }) => {
-  if (data.length === 0) return <div>No data</div>;
+export const Table: <T, U>(
+  props: TableProps<T, U>
+) => React.ReactElement<TableProps<T, U>> | null = ({ columns, data }) => {
+  if (data.length === 0) return null;
+  console.log(columns, data);
+
   return (
     <TableContainer>
       <Thead>

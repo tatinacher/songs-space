@@ -30,8 +30,8 @@ export const SearchField: React.FC<{ placeholder: string }> = ({
         </SearchButton>
       </Search>
       <SearchResult>
-        {searchResult.map(({ title, id }) => (
-          <Result to={`song/${id}`}>{title}</Result>
+        {searchResult.map(({ title, _id }) => (
+          <Result to={`song/${_id}`}>{title}</Result>
         ))}
       </SearchResult>
     </SearchBlock>

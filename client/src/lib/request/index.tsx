@@ -9,9 +9,10 @@ export const request = async ({
   method,
   params = {}
 }: RequestProps): Promise<any> => {
-  console.log(url);
-
-  const request = process.env.REACT_APP_HOST + "/api" + url;
+  const request =
+    !process.env.NODE_ENV || process.env.NODE_ENV === "development"
+      ? process.env.REACT_APP_HOST + "/api" + url
+      : "/api" + url;
   const headers = {
     "Content-Type": "application/json;charset=UTF-8",
     Accept: "application/json"
@@ -24,7 +25,6 @@ export const request = async ({
           method,
           body: JSON.stringify(params)
         };
-  console.log(params);
 
   try {
     const response = await fetch(request, options);

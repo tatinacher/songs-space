@@ -1,9 +1,11 @@
-import { createEffect, createStore } from "effector";
+import { createEffect, createStore, createEvent, forward } from "effector";
 
 import { Author, AuthorSongs, fetchAuthors, fetchAuthor } from "api/authors";
 
 export const getAuthors = createEffect<void, Author[]>();
 export const getAuthorSongs = createEffect<string, AuthorSongs>();
+
+export const getSongs = createEvent<string>();
 
 getAuthors.use(fetchAuthors);
 getAuthorSongs.use(fetchAuthor);
@@ -22,9 +24,13 @@ $authors.on(getAuthors.fail, (_, { params, error }) => {
 export const $authorSongsPending = getAuthorSongs.pending;
 
 $authorSongs.on(getAuthorSongs.done, (_, { result }) => {
+  console.log(result);
+
   return result;
 });
 
 $authorSongs.on(getAuthorSongs.fail, (_, { params, error }) => {
   console.log(params, error);
 });
+
+forward({ from: getSongs, to: getAuthorSongs });

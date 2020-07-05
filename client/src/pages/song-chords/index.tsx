@@ -72,16 +72,16 @@ const showChords = (
 };
 
 export const SongChords: React.FC = () => {
-  const { id } = useParams();
+  const { _id } = useParams();
   const [isChordsOn, setChrodsSwitch] = React.useState(true);
   const [isLyricsOn, setLyricsSwitch] = React.useState(true);
 
   const isGuitar = useStore($isGuitar);
   React.useEffect(() => {
-    if (id) {
-      getLyricChrods(id);
+    if (_id) {
+      getLyricChrods(_id);
     }
-  }, [id]);
+  }, [_id]);
   const lyricChords: SongVariation | null = useStore($lyricChords);
   const [fontSize, changeFontSize] = React.useState(14);
 

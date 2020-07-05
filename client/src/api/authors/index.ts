@@ -7,13 +7,14 @@ export type Author = {
 };
 
 export type Song = {
+  _id: string;
   title: string;
-  id: string;
 };
 
 export type AuthorSongs = {
   author: string;
   songs: Song[];
+  song?: Song;
 };
 
 export const fetchAuthors = (): Promise<Author[]> =>
@@ -22,8 +23,8 @@ export const fetchAuthors = (): Promise<Author[]> =>
     method: "get"
   });
 
-export const fetchAuthor = (id: string): Promise<AuthorSongs> =>
+export const fetchAuthor = (_id: string): Promise<AuthorSongs> =>
   request({
-    url: `/author/${id}`,
+    url: `/author/${_id}`,
     method: "get"
   });

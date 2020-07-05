@@ -1,6 +1,7 @@
 export {
   getAuthors,
   getAuthorSongs,
+  getSongs,
   $authors,
   $authorSongs,
   $authorSongsPending

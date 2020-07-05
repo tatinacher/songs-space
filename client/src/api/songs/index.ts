@@ -14,9 +14,9 @@ export const fetchSongVariations = (songId: string): Promise<Song[]> =>
     method: "get"
   });
 
-export const fetchLyricChrods = (id: string): Promise<SongVariation> =>
+export const fetchLyricChrods = (_id: string): Promise<SongVariation> =>
   request({
-    url: `/variation/${id}`,
+    url: `/variation/${_id}`,
     method: "get"
   });
 

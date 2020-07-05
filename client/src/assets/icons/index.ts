@@ -1,1 +1,4 @@
-export { ReactComponent as Melody } from "./melody.svg";
+import AudioWaveIcon from "./audio-wave.png";
+
+export { ReactComponent as MelodyIcon } from "./melody.svg";
+export { AudioWaveIcon };

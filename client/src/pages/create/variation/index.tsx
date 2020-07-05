@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useStore } from "effector-react";
 import { handleChange, $song, updateSong, submitForm } from "./model";
 import { Text, Textarea, Input, Chords, LyricsText } from "ui";
-import { Melody } from "assets/icons";
+import { MelodyIcon } from "assets/icons";
 import { parseLyrics } from "lib/chords";
 import {
   $authors,
@@ -36,9 +36,9 @@ export const CreateSongVariation: React.FC = () => {
       </div>
     ) : (
       <div>
-        <Melody />
-        <Melody />
-        <Melody />
+        <MelodyIcon />
+        <MelodyIcon />
+        <MelodyIcon />
       </div>
     );
 
@@ -78,7 +78,7 @@ export const CreateSongVariation: React.FC = () => {
             <option value="">Select Song</option>
             {authorSongs &&
               authorSongs.songs.map(song => (
-                <option key={song.id} value={song.id}>
+                <option key={song._id} value={song._id}>
                   {song.title}
                 </option>
               ))}

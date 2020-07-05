@@ -9,22 +9,6 @@ export const TableContainer = styled.table`
 
 export const Thead = styled.thead`
   margin: 0px;
-  text-align: center;
-  td {
-    padding: 10px;
-    border-bottom: 1px solid var(--bg);
-  }
 `;
 
-export const Row = styled.td`
-  border-bottom: 1px solid #bebbbb;
-  padding: 10px;
-  text-align: center;
-  a {
-    color: black;
-    text-decoration: none;
-  }
-  &:hover {
-    background: #bebbbb;
-  }
-`;
+export const Row = styled.td``;

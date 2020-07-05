@@ -1,6 +1,6 @@
 import {
   Bands,
-  Band,
+  Songss,
   Login,
   Main,
   SongVariations,
@@ -16,7 +16,7 @@ export const routes = [
     exact: true
   },
   {
-    path: "/song/:id",
+    path: "/song/:_id",
     component: SongVariations
   },
   {
@@ -29,11 +29,11 @@ export const routes = [
     exact: true
   },
   {
-    path: "/bands/:id",
-    component: Band
+    path: "/songs/:_id",
+    component: Songss
   },
   {
-    path: "/variation/:id",
+    path: "/variation/:_id",
     component: SongChords
   },
   {

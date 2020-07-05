@@ -25,7 +25,7 @@ export type SongsType = {
 
 export type Song = {
   title: string;
-  id: string;
+  _id: string;
 };
 
 export type Line = {

@@ -23,18 +23,20 @@ router.get("/authors", (req, res) => {
   });
 });
 
-router.get("/author/:id", (req, res) => {
-  const id = req.params.id;
+router.get("/author/:_id", (req, res) => {
+  const _id = req.params._id;
 
-  model.Songs.find({ author: new ObjectId(id) }).exec(function(err, data) {
+  model.Songs.find({ author: _id }).exec(function(err, data) {
     if (err) return res.json({ success: false, error: err });
-    model.Authors.findById(new ObjectId(id), (err, author) => {
+    model.Authors.findById(_id, (err, author) => {
       const songs = data.map(song => {
+        // TODO: get top song instead of first one
         return {
-          id: song._id,
+          _id: song._id,
           title: song.title
         };
       });
+
       const result = {
         author: author.author,
         songs: songs
@@ -45,14 +47,14 @@ router.get("/author/:id", (req, res) => {
   });
 });
 
-router.get("/song/:id", (req, res) => {
-  const id = req.params.id;
+router.get("/song/:_id", (req, res) => {
+  const _id = req.params._id;
 
-  model.SongChords.find({ song: new ObjectId(id) }).exec(function(err, data) {
+  model.SongChords.find({ song: new ObjectId(_id) }).exec(function(err, data) {
     if (err) return res.json({ success: false, error: err });
     const songs = data.map(song => {
       return {
-        id: song._id,
+        _id: song._id,
         title: song.title
       };
     });
@@ -60,26 +62,26 @@ router.get("/song/:id", (req, res) => {
   });
 });
 
-router.get("/variation/:id", (req, res) => {
-  const id = req.params.id;
+router.get("/variation/:_id", (req, res) => {
+  const _id = req.params._id;
 
-  model.SongChords.findById(new ObjectId(id), (err, data) => {
+  model.SongChords.findById(new ObjectId(_id), (err, data) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data: data });
   });
 });
 
 router.post("/update-author", (req, res) => {
-  const { id, update } = req.body;
-  model.Authors.findByIdAndUpdate(id, update, err => {
+  const { _id, update } = req.body;
+  model.Authors.findByIdAndUpdate(_id, update, err => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true });
   });
 });
 
 router.delete("/delete-author", (req, res) => {
-  const { id } = req.body;
-  model.Authors.findByIdAndRemove(id, err => {
+  const { _id } = req.body;
+  model.Authors.findByIdAndRemove(_id, err => {
     if (err) return res.send(err);
     return res.json({ success: true });
   });
@@ -89,9 +91,8 @@ router.post("/add-author", (req, res) => {
   let data = new model.Authors();
 
   const { author, description } = req.body;
-  const id = mongoose.Types.ObjectId();
 
-  if ((!id && id !== 0) || !author) {
+  if (!author) {
     return res.json({
       success: false,
       error: "INVALID INPUTS"
@@ -99,7 +100,7 @@ router.post("/add-author", (req, res) => {
   }
   data.author = author;
   data.description = description || "";
-  data.id = id;
+
   data.save(err => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true });
@@ -110,16 +111,14 @@ router.post("/add-song", (req, res) => {
   let song = new model.Songs();
 
   const { title, author, album } = req.body;
-  const id = mongoose.Types.ObjectId();
 
-  if ((!id && id !== 0) || !title || !author) {
+  if (!title || !author) {
     return res.json({
       success: false,
       error: "INVALID INPUTS"
     });
   }
 
-  song.id = id;
   song.title = title;
   song.author = author;
   song.album = album;
@@ -133,30 +132,25 @@ router.post("/add-song", (req, res) => {
 router.post("/add-song-variation", (req, res) => {
   let song = new model.SongChords();
 
-  const id = mongoose.Types.ObjectId();
   const { title, lyrics, chords, fullText, songId } = req.body;
-  song.id = id;
-  song.title = title;
-  song.lyrics = lyrics;
-  song.chords = chords;
-  song.fullText = fullText;
-  song.song = songId;
 
-  if (
-    (!id && id !== 0) ||
-    !title ||
-    !lyrics ||
-    !fullText ||
-    !chords ||
-    !songId
-  ) {
+  console.log(!title || !lyrics || !fullText || !chords || !songId);
+
+  if (!title || !lyrics || !fullText || !chords || !songId) {
     return res.json({
       success: false,
       error: "INVALID INPUTS"
     });
   }
+  song.title = title;
+  song.lyrics = lyrics;
+  song.chords = chords;
+  song.fullText = fullText;
+  song.song = new ObjectId(songId);
 
   song.save(err => {
+    console.log(err);
+
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true });
   });
@@ -170,7 +164,7 @@ router.get("/search", (req, res) => {
       if (err) return res.json({ success: false, error: err });
       const songs = data.map(song => {
         return {
-          id: song._id,
+          _id: song._id,
           title: song.title
         };
       });
