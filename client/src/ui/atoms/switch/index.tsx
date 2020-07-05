@@ -21,8 +21,8 @@ export const Switch: React.FC<SwitchProps> = ({ status, onClick, id }) => (
 export const Label = styled.label`
   position: relative;
   display: inline-block;
-  width: 60px;
-  height: 34px;
+  width: 54px;
+  height: 28px;
 `;
 export const Span = styled.div`
   position: absolute;
@@ -48,8 +48,8 @@ export const Span = styled.div`
     -webkit-transition: 0.4s;
     transition: 0.4s;
     border-radius: 50%;
-    width: 26px;
-    height: 26px;
+    width: 20px;
+    height: 20px;
   }
 `;
 

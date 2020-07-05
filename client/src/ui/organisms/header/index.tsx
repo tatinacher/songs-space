@@ -20,14 +20,14 @@ export const Header: React.FC = () => (
           <Menu>
             <Link to="/song">Songs</Link>
           </Menu>
-          <>
+          <Hide>
             <Menu>
               <Link to="/create-song-variation">Create Song Variation</Link>
             </Menu>
             <Menu>
               <Link to="/create-song">Create Song</Link>
             </Menu>
-          </>
+          </Hide>
         </MenuBlock>
         <MenuBlock>
           <Menu>

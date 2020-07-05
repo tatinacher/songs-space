@@ -9,8 +9,14 @@ import {
   ChordsScheme,
   Lyrics,
   Page,
+  Settings,
   Switches,
-  SwitchBlock
+  SwitchBlock,
+  SwitchText,
+  LyricsSwitch,
+  LyricsSwitchText,
+  ChordsSwitch,
+  ChordsSwitchText
 } from "./style";
 import Chord from "@tombatossals/react-chords/lib/Chord";
 import * as ukulele from "lib/chords/ukulele.json";
@@ -18,6 +24,7 @@ import * as guitar from "lib/chords/guitar.json";
 import { ChordsType, SongVariation } from "constants/types";
 import { cutText } from "lib/chords/fitChords";
 import { $isGuitar, changeInstrument } from "./model";
+import { unify } from "lib/touch";
 
 interface ChordsAndTextProps {
   chords: ChordsType[];
@@ -87,7 +94,7 @@ export const SongChords: React.FC = () => {
 
   if (!lyricChords) return null;
   const { title, lyrics, chords } = lyricChords;
-  const maxSize = (window.innerWidth - 30) / (fontSize - 5);
+  const maxSize = (window.innerWidth - 30 - 100) / (fontSize - 5);
 
   return (
     <Page>
@@ -97,23 +104,37 @@ export const SongChords: React.FC = () => {
           <button onClick={() => changeFontSize(fontSize + 1)}>+</button>
           <button onClick={() => changeFontSize(fontSize - 1)}>-</button>
         </Changes>
-        <SwitchBlock>
-          Ukulele
-          <Switch
-            status={isGuitar}
-            onClick={() => changeInstrument()}
-            id="instrument"
-          />
-          Guitar
-        </SwitchBlock>
-        <SongTitle>{title}</SongTitle>
-        <Switches>
-          <Switch status={isLyricsOn} onClick={setLyricsSwitch} id="lyrics" />{" "}
-          Lyrics
-          <Switch status={isChordsOn} onClick={setChrodsSwitch} id="chords" />
-          Chords
-        </Switches>
+        <Settings>
+          <Switches>
+            <LyricsSwitch>
+              <Switch
+                status={isLyricsOn}
+                onClick={setLyricsSwitch}
+                id="lyrics"
+              />
+              <LyricsSwitchText>Lyrics</LyricsSwitchText>
+            </LyricsSwitch>
+            <ChordsSwitch>
+              <Switch
+                status={isChordsOn}
+                onClick={setChrodsSwitch}
+                id="chords"
+              />
+              <ChordsSwitchText>Chords</ChordsSwitchText>
+            </ChordsSwitch>
+          </Switches>
 
+          <SwitchBlock>
+            <SwitchText>Ukulele</SwitchText>
+            <Switch
+              status={isGuitar}
+              onClick={() => changeInstrument()}
+              id="instrument"
+            />
+            <SwitchText>Guitar</SwitchText>
+          </SwitchBlock>
+        </Settings>
+        <SongTitle>{title}</SongTitle>
         <Lyrics>
           {lyrics.map((lyricLine, key) => (
             <ChordsAndText
