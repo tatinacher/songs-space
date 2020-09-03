@@ -93,8 +93,10 @@ export const setChords = (
   previousColor: string
 ) => {
   const res: Array<ChordsType> = [];
+
   const maxLendth =
     nextLine.length > line.length ? nextLine.length : line.length;
+
   let index = 0;
   let chordsLine = line;
 
@@ -112,7 +114,6 @@ export const setChords = (
     });
     index = 1;
   }
-  console.log(chords.length);
 
   for (let i = index; i < chords.length - 1; i++) {
     const chordPosition = chordsLine.indexOf(chords[i]);
@@ -128,25 +129,21 @@ export const setChords = (
       afterSpaces: spases,
       color: chordColor
     });
-
-    console.log(
-      chords[i],
-      chords[i + 1],
-      chordPosition,
-      nextChordPosition,
-      spases,
-      chordsLine
-    );
   }
   const name = chords[chords.length - 1];
   const chordColor = findColorByName(name, allChords);
 
   if (chords.length > 1) {
+    let sum = 0;
+    res.forEach(el => {
+      sum += el.name.length + el.beforeSpaces + el.afterSpaces;
+    });
+
+    const afterSpaces = maxLendth - sum;
     res.push({
       name: name,
       beforeSpaces: 0,
-      afterSpaces:
-        maxLendth - chordsLine.indexOf(chords[chords.length - 2]) - name.length,
+      afterSpaces,
       color: chordColor
     });
   }

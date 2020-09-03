@@ -7,7 +7,6 @@ import { getAuthors, $authors } from "features/authors";
 export const CreateSong: React.FC = () => {
   const { title, author } = useStore($song);
   const authors = useStore($authors);
-
   React.useEffect(() => {
     getAuthors();
   }, []);

@@ -16,7 +16,7 @@ export const Main: React.FC = () => (
       <Content>
         <Title>Sing songs</Title>
         <SearchBlock>
-          <SearchField placeholder="Enter name of the song" />
+          <SearchField placeholder="Song name" />
         </SearchBlock>
       </Content>
     </Background>

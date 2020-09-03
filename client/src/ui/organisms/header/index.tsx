@@ -17,10 +17,10 @@ export const Header: React.FC = () => (
           <Menu>
             <Link to="/bands">Bands</Link>
           </Menu>
-          <Menu>
-            <Link to="/song">Songs</Link>
-          </Menu>
           <Hide>
+            <Menu>
+              <Link to="/song">Songs</Link>
+            </Menu>
             <Menu>
               <Link to="/create-song-variation">Create Song Variation</Link>
             </Menu>

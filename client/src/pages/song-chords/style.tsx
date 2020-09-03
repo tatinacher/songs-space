@@ -1,6 +1,10 @@
 import styled from "styled-components";
 import { device } from "constants/breakpoints";
 
+const map = (props: { isOpen: boolean }) => ({
+  "data-open": props.isOpen
+});
+
 export const Lyrics = styled.div`
   margin: 0 15px;
 `;
@@ -34,11 +38,15 @@ export const ChordsScheme = styled.div`
   }
 `;
 
-export const Page = styled.div`
+export const Page = styled.div.attrs(map)<{ isOpen: boolean }>`
   display: flex;
   flex-direction: row;
   overflow: hidden;
-  margin: 40px 0 0 100px;
+  margin: 20px 0 0 10px;
+
+  &[data-open="true"] {
+    margin: 20px 0 0 100px;
+  }
 
   @media ${device.tablet} {
     flex-direction: column;
@@ -104,4 +112,19 @@ export const ChordsSwitchText = styled.div`
 
 export const Tabs = styled.div`
   min-width: 100%;
+`;
+
+export const ChordsWrapper = styled.div`
+  width: 100%;
+`;
+
+export const MobileTab = styled.div.attrs(map)<{ isOpen: boolean }>`
+  display: none;
+  &[data-open="true"] {
+    display: fixed;
+  }
+
+  @media ${device.tablet} {
+    display: block;
+  }
 `;

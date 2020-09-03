@@ -2,7 +2,7 @@ import * as React from "react";
 import { useStore } from "effector-react";
 import { getLyricChrods, $lyricChords } from "features/song";
 import { useParams } from "react-router";
-import { SongTitle, Chords, LyricsText, Switch } from "ui";
+import { SongTitle, Chords, LyricsText, Switch, Loader } from "ui";
 import {
   Changes,
   ChordContainer,
@@ -16,7 +16,9 @@ import {
   LyricsSwitch,
   LyricsSwitchText,
   ChordsSwitch,
-  ChordsSwitchText
+  ChordsSwitchText,
+  ChordsWrapper,
+  MobileTab
 } from "./style";
 import Chord from "@tombatossals/react-chords/lib/Chord";
 import * as ukulele from "lib/chords/ukulele.json";
@@ -24,7 +26,7 @@ import * as guitar from "lib/chords/guitar.json";
 import { ChordsType, SongVariation } from "constants/types";
 import { cutText } from "lib/chords/fitChords";
 import { $isGuitar, changeInstrument } from "./model";
-import { unify } from "lib/touch";
+//import { unify } from "lib/touch";
 
 interface ChordsAndTextProps {
   chords: ChordsType[];
@@ -82,6 +84,10 @@ export const SongChords: React.FC = () => {
   const { _id } = useParams();
   const [isChordsOn, setChrodsSwitch] = React.useState(true);
   const [isLyricsOn, setLyricsSwitch] = React.useState(true);
+  const [isMobileTabOpen, setMobileTabOpen] = React.useState(true);
+  const [touchStartPosition, setTouchStartPosition] = React.useState(0);
+  const [touchEndPosition, setTouchEndPosition] = React.useState(0);
+  const [maxSize, setMaxSize] = React.useState(0);
 
   const isGuitar = useStore($isGuitar);
   React.useEffect(() => {
@@ -89,17 +95,70 @@ export const SongChords: React.FC = () => {
       getLyricChrods(_id);
     }
   }, [_id]);
+
+  const handleTouchStart = (event: TouchEvent) => {
+    const startPositionX = event.touches[0].clientX;
+    setTouchStartPosition(startPositionX);
+  };
+
+  const handleTouchEnd = (event: TouchEvent) => {
+    const endPositionX = event.changedTouches[0].clientX;
+    setTouchEndPosition(endPositionX);
+  };
+
+  React.useEffect(() => {
+    document.addEventListener("touchstart", handleTouchStart);
+    return () => {
+      document.removeEventListener("touchstart", handleTouchStart);
+    };
+  });
+
+  React.useEffect(() => {
+    document.addEventListener("touchend", handleTouchEnd);
+    return () => {
+      document.removeEventListener("touchend", handleTouchEnd);
+    };
+  });
+
+  React.useEffect(() => {
+    if (touchEndPosition - touchStartPosition > 100) {
+      setMobileTabOpen(true);
+    }
+    if (touchStartPosition - touchEndPosition > 100) {
+      setMobileTabOpen(false);
+    }
+  }, [touchEndPosition, touchStartPosition]);
+
   const lyricChords: SongVariation | null = useStore($lyricChords);
   const [fontSize, changeFontSize] = React.useState(14);
 
-  if (!lyricChords) return null;
+  React.useEffect(() => {
+    let maxWidth = window.innerWidth - 30;
+    if (isMobileTabOpen) {
+      maxWidth -= 100;
+    }
+    maxWidth /= fontSize - 5;
+    setMaxSize(maxWidth);
+  }, [isMobileTabOpen, fontSize]);
+
+  if (!lyricChords) return <Loader />;
+
   const { title, lyrics, chords } = lyricChords;
-  const maxSize = (window.innerWidth - 30 - 100) / (fontSize - 5);
+
+  let tabs = null;
+
+  if (chords) {
+    tabs = (
+      <MobileTab isOpen={isMobileTabOpen}>
+        <Tab chords={chords} />
+      </MobileTab>
+    );
+  }
 
   return (
-    <Page>
-      {chords && <Tab chords={chords} />}
-      <div>
+    <Page isOpen={isMobileTabOpen}>
+      {tabs}
+      <ChordsWrapper>
         <Changes>
           <button onClick={() => changeFontSize(fontSize + 1)}>+</button>
           <button onClick={() => changeFontSize(fontSize - 1)}>-</button>
@@ -123,7 +182,6 @@ export const SongChords: React.FC = () => {
               <ChordsSwitchText>Chords</ChordsSwitchText>
             </ChordsSwitch>
           </Switches>
-
           <SwitchBlock>
             <SwitchText>Ukulele</SwitchText>
             <Switch
@@ -147,7 +205,7 @@ export const SongChords: React.FC = () => {
             />
           ))}
         </Lyrics>
-      </div>
+      </ChordsWrapper>
     </Page>
   );
 };
@@ -160,8 +218,11 @@ export const ChordsAndText: React.FC<ChordsAndTextProps> = ({
   maxSize,
   text
 }) => {
+  console.log(chords);
+
   if (text.length > maxSize) {
     const lines = cutText(text, chords, maxSize);
+
     return (
       <div>
         {lines.map(({ chords, text }) => (
@@ -169,7 +230,7 @@ export const ChordsAndText: React.FC<ChordsAndTextProps> = ({
             {isChordsOn && (
               <Chords
                 showSpaces={isLyricsOn}
-                data={chords}
+                chords={chords}
                 fontSize={fontSize}
               />
             )}
@@ -182,7 +243,7 @@ export const ChordsAndText: React.FC<ChordsAndTextProps> = ({
     return (
       <div>
         {isChordsOn && (
-          <Chords showSpaces={isLyricsOn} data={chords} fontSize={fontSize} />
+          <Chords showSpaces={isLyricsOn} chords={chords} fontSize={fontSize} />
         )}
         {isLyricsOn && <LyricsText fontSize={fontSize}>{text}</LyricsText>}
       </div>

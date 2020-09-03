@@ -3,20 +3,21 @@ import styled from "styled-components";
 import { ChordsType } from "constants/types";
 
 interface ChordsProps {
-  data?: ChordsType[];
+  chords?: ChordsType[];
   fontSize: number;
   showSpaces?: boolean;
 }
 
 export const Chords: React.FC<ChordsProps> = ({
-  data,
+  chords,
   fontSize,
-  showSpaces
+  showSpaces = true
 }) => {
-  if (!data) return null;
+  if (!chords) return null;
+
   return (
     <ChordLine fontSize={fontSize}>
-      {data.map((chord, key) => {
+      {chords.map((chord, key) => {
         if (!showSpaces) {
           chord.afterSpaces = 10 - chord.name.length;
           chord.beforeSpaces = 0;
@@ -34,13 +35,25 @@ export const Chord: React.FC<ChordsType> = ({
   color
 }) => {
   let line = name;
+  console.log(line);
+
   if (beforeSpaces > 0) {
     line = " ".repeat(beforeSpaces) + line;
   }
+  console.log(line);
+
   if (afterSpaces > 0) {
     line = line + " ".repeat(afterSpaces);
   }
-  return <div style={{ color: color }}>{line}</div>;
+  console.log(line);
+
+  console.log(beforeSpaces, afterSpaces, name);
+
+  return (
+    <div data-color="color" style={{ color: color }}>
+      {line}
+    </div>
+  );
 };
 
 export const ChordLine = styled.div<{

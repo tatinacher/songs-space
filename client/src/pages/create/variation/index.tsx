@@ -12,40 +12,37 @@ import {
   getAuthorSongs
 } from "features/authors";
 import { Line } from "constants/types";
+import { FONT_SIZE } from "constants/styles";
 
 export const CreateSongVariation: React.FC = () => {
   const { title, fullText, lyrics } = useStore($song);
   const authors = useStore($authors);
   const authorSongs = useStore($authorSongs);
-  const [fontSize, changeFontSize] = React.useState(14);
+  const [fontSize, changeFontSize] = React.useState(FONT_SIZE);
 
   const onClickHandler = React.useCallback(() => {
     const data = parseLyrics(fullText);
     updateSong(data);
   }, [fullText]);
 
-  const preview =
-    lyrics && lyrics.length !== 0 ? (
-      <div>
-        {lyrics.map((line: Line, key: number) => (
-          <div key={key}>
-            <Chords fontSize={fontSize} data={line.chords} />
-            <LyricsText fontSize={fontSize}>{line.text}</LyricsText>
-          </div>
-        ))}
-      </div>
-    ) : (
-      <div>
-        <MelodyIcon />
-        <MelodyIcon />
-        <MelodyIcon />
-      </div>
-    );
-
-  console.log(lyrics);
   React.useEffect(() => {
     getAuthors();
   }, []);
+
+  let preview = <></>;
+
+  if (lyrics.length !== 0) {
+    preview = (
+      <>
+        {lyrics.map((line: Line, key: number) => (
+          <div key={key}>
+            <Chords fontSize={fontSize} chords={line.chords} />
+            <LyricsText fontSize={fontSize}>{line.text}</LyricsText>
+          </div>
+        ))}
+      </>
+    );
+  }
 
   return (
     <Song>
