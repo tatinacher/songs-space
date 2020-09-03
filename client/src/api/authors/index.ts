@@ -9,12 +9,12 @@ export type Author = {
 export type Song = {
   _id: string;
   title: string;
+  variations: number;
 };
 
 export type AuthorSongs = {
   author: string;
   songs: Song[];
-  song?: Song;
 };
 
 export const fetchAuthors = (): Promise<Author[]> =>

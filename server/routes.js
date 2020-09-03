@@ -23,28 +23,81 @@ router.get("/authors", (req, res) => {
   });
 });
 
-router.get("/author/:_id", (req, res) => {
+router.get("/author/:_id", async (req, ress) => {
   const _id = req.params._id;
 
-  model.Songs.find({ author: _id }).exec(function(err, data) {
-    if (err) return res.json({ success: false, error: err });
-    model.Authors.findById(_id, (err, author) => {
-      const songs = data.map(song => {
-        // TODO: get top song instead of first one
-        return {
-          _id: song._id,
-          title: song.title
-        };
+  model.Songs.find({ author: _id })
+    .exec()
+    .then(allSongs => {
+      let allPromises = [];
+      let songs = [];
+      allSongs.forEach(song => {
+        allPromises.push(model.SongChords.find({ song: song._id }).exec());
+        songs.push({ _id: song._id, title: song.title });
       });
+      return { allPromises, songs };
+    })
+    .then(res => {
+      Promise.all(res.allPromises)
+        .then(variations => {
+          const songsNew = [];
 
-      const result = {
-        author: author.author,
-        songs: songs
-      };
-
-      return res.json({ success: true, data: result });
+          variations.forEach(variation => {
+            res.songs.forEach(el => {
+              if (JSON.stringify(el._id) == JSON.stringify(variation[0].song)) {
+                songsNew.push({ variations: variation.length, ...el });
+              }
+            });
+          });
+          return songsNew;
+        })
+        .then(songs => {
+          model.Authors.findById(_id, (err, author) => {
+            const result = {
+              author: author.author,
+              songs: songs
+            };
+            return ress.json({ success: true, data: result });
+          });
+        });
     });
-  });
+
+  // model.Songs.find({ author: _id }).exec(async function(err, data) {
+  //   if (err) return res.json({ success: false, error: err });
+  //   console.log(1);
+
+  //   await model.Authors.findById(_id, async (err, author) => {
+  //     const songs = await data.map(async song => {
+  //       // TODO: get top song instead of first one
+  //       let variationsNumber = 0;
+  //       console.log(2);
+
+  //       await data.map(async song => {
+  //         await model.SongChords.find({ song: song._id }).exec(
+  //           (err, variations) => {
+  //             variationsNumber = variations.length;
+  //           }
+  //         );
+  //       });
+  //       console.log(3);
+
+  //       return {
+  //         _id: song._id,
+  //         title: song.title,
+  //         variations: variationsNumber
+  //       };
+  //     });
+  //     console.log(songs);
+
+  //     const result = {
+  //       author: author.author,
+  //       songs: songs
+  //     };
+  //     console.log(5);
+
+  //     return res.json({ success: true, data: result });
+  //   });
+  // });
 });
 
 router.get("/song/:_id", (req, res) => {

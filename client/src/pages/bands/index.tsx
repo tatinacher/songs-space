@@ -49,11 +49,11 @@ export const Bands: React.FC = () => {
   if (!authorSongs) {
     songss = null;
   } else {
-    const songsList = authorSongs.songs.map(({ _id, title }) => ({
+    const songsList = authorSongs.songs.map(({ _id, title, variations }) => ({
       title: (
         <SongWrapper>
           <SongLink to={"song/" + _id}>{title}</SongLink>
-          <BandSongsCount>23 variations</BandSongsCount>
+          <BandSongsCount>{variations} variations</BandSongsCount>
         </SongWrapper>
       )
     }));
