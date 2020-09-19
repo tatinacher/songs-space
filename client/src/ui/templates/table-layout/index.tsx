@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { device } from "constants/breakpoints";
+import styled from 'styled-components';
+import { device } from 'constants/breakpoints';
 
 export const TableLayout = styled.div`
   display: flex;

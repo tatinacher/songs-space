@@ -1,15 +1,15 @@
-import * as React from "react";
-import { useStore } from "effector-react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import * as React from 'react';
+import { useStore } from 'effector-react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
-import { $authors, getAuthors, getSongs, $authorSongs } from "features/authors";
-import { Table, SearchField } from "ui";
-import { Column } from "ui/organisms/table";
-import { device } from "constants/breakpoints";
-import { Song } from "constants/types";
-import { AudioWaveIcon } from "assets/icons";
-import { TableLayout } from "ui/templates";
+import { $authors, getAuthors, getSongs, $authorSongs } from 'features/authors';
+import { Table, SearchField } from 'ui';
+import { Column } from 'ui/organisms/table';
+import { device } from 'constants/breakpoints';
+import { Song } from 'constants/types';
+import { AudioWaveIcon } from 'assets/icons';
+import { TableLayout } from 'ui/templates';
 
 type AuthorSong = {
   author: React.ReactElement;
@@ -20,17 +20,17 @@ export const Bands: React.FC = () => {
   const bands = useStore($authors);
   const authorSongs = useStore($authorSongs);
   const column: Column<AuthorSong>[] = [
-    { key: "author", name: <THeadAuthor>Author</THeadAuthor> }
+    { key: 'author', name: <THeadAuthor>Author</THeadAuthor> },
   ];
   const columnSongs: Column<Song>[] = [
-    { key: "title", name: <THeadSong>Songs</THeadSong> }
+    { key: 'title', name: <THeadSong>Songs</THeadSong> },
   ];
 
   React.useEffect(() => {
     getAuthors();
   }, []);
 
-  const bandsList = bands.map(band => ({
+  const bandsList = bands.map((band) => ({
     author: (
       <Band onClick={() => getSongs(band._id)}>
         <BandIcon>
@@ -41,7 +41,7 @@ export const Bands: React.FC = () => {
           <BandSongsCount>23 songs</BandSongsCount>
         </BandText>
       </Band>
-    )
+    ),
   }));
 
   let songss;
@@ -52,10 +52,10 @@ export const Bands: React.FC = () => {
     const songsList = authorSongs.songs.map(({ _id, title, variations }) => ({
       title: (
         <SongWrapper>
-          <SongLink to={"song/" + _id}>{title}</SongLink>
+          <SongLink to={'song/' + _id}>{title}</SongLink>
           <BandSongsCount>{variations} variations</BandSongsCount>
         </SongWrapper>
-      )
+      ),
     }));
     songss = (
       <SongsBlock>

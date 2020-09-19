@@ -1,5 +1,5 @@
-import * as React from "react";
-import styled from "styled-components";
+import * as React from 'react';
+import styled from 'styled-components';
 
 interface SwitchProps {
   status: boolean;
@@ -37,7 +37,7 @@ export const Span = styled.div`
   border-radius: 34px;
 
   &:before {
-    content: "";
+    content: '';
     position: absolute;
     cursor: pointer;
     top: 4px;

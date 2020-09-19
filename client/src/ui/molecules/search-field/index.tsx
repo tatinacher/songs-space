@@ -1,19 +1,19 @@
-import * as React from "react";
-import styled from "styled-components";
-import { ButtonIcon } from "ui/atoms";
+import * as React from 'react';
+import styled from 'styled-components';
+import { ButtonIcon } from 'ui/atoms';
 import {
   $searchRequest,
   $searchResponse,
   handleChange,
-  submitForm
-} from "features/search";
-import { useStore } from "effector-react";
-import { Link } from "react-router-dom";
-import { device } from "constants/breakpoints";
-import searchIcon from "assets/icons/icons8-search.svg";
+  submitForm,
+} from 'features/search';
+import { useStore } from 'effector-react';
+import { Link } from 'react-router-dom';
+import { device } from 'constants/breakpoints';
+import searchIcon from 'assets/icons/icons8-search.svg';
 
 export const SearchField: React.FC<{ placeholder: string }> = ({
-  placeholder
+  placeholder,
 }) => {
   const song = useStore($searchRequest);
   const searchResult = useStore($searchResponse);
@@ -59,7 +59,7 @@ export const Input = styled.input`
   background: #fff;
   appearance: none;
   font-weight: 300;
-  font-family: "Roboto Mono";
+  font-family: 'Roboto Mono';
 
   :focus {
   }

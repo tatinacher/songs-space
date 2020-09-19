@@ -1,9 +1,9 @@
-import * as React from "react";
-import { useStore } from "effector-react";
-import { $lastSongs, getLastRecords } from "./model";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import { SongVariation } from "constants/types";
+import * as React from 'react';
+import { useStore } from 'effector-react';
+import { $lastSongs, getLastRecords } from './model';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { SongVariation } from 'constants/types';
 
 export const LastRecords: React.FC<{ count: number }> = ({ count }) => {
   const lastSongs: SongVariation[] | null = useStore($lastSongs);
@@ -14,9 +14,9 @@ export const LastRecords: React.FC<{ count: number }> = ({ count }) => {
 
   const songs =
     !lastSongs || lastSongs.length === 0
-      ? "No songs found"
+      ? 'No songs found'
       : lastSongs.map((song, key) => (
-          <SongLink key={key} to={"/variation/" + song._id}>
+          <SongLink key={key} to={'/variation/' + song._id}>
             {song.title}
           </SongLink>
         ));

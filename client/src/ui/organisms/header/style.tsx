@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { device } from "constants/breakpoints";
-import { Link } from "react-router-dom";
+import styled from 'styled-components';
+import { device } from 'constants/breakpoints';
+import { Link } from 'react-router-dom';
 
 export const Nav = styled.nav`
   /*background: var(--bg);*/

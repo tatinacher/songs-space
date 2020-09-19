@@ -1,6 +1,6 @@
-import * as React from "react";
-import styled from "styled-components";
-import { ChordsType } from "constants/types";
+import * as React from 'react';
+import styled from 'styled-components';
+import { ChordsType } from 'constants/types';
 
 interface ChordsProps {
   chords?: ChordsType[];
@@ -11,7 +11,7 @@ interface ChordsProps {
 export const Chords: React.FC<ChordsProps> = ({
   chords,
   fontSize,
-  showSpaces = true
+  showSpaces = true,
 }) => {
   if (!chords) return null;
 
@@ -32,18 +32,18 @@ export const Chord: React.FC<ChordsType> = ({
   beforeSpaces,
   afterSpaces,
   name,
-  color
+  color,
 }) => {
   let line = name;
   console.log(line);
 
   if (beforeSpaces > 0) {
-    line = " ".repeat(beforeSpaces) + line;
+    line = ' '.repeat(beforeSpaces) + line;
   }
   console.log(line);
 
   if (afterSpaces > 0) {
-    line = line + " ".repeat(afterSpaces);
+    line = line + ' '.repeat(afterSpaces);
   }
   console.log(line);
 
@@ -63,5 +63,5 @@ export const ChordLine = styled.div<{
   white-space: pre-wrap;
   font-size: 14px;
   font-weight: bold;
-  font-size: ${props => props.fontSize}px;
+  font-size: ${(props) => props.fontSize}px;
 `;

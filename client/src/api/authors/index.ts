@@ -1,4 +1,4 @@
-import { request } from "lib/request";
+import { request } from 'lib/request';
 
 export type Author = {
   author: string;
@@ -24,18 +24,18 @@ export type GetAuthorSongs = {
 
 export const fetchAuthors = (): Promise<Author[]> =>
   request({
-    url: "/authors",
-    method: "get"
+    url: '/authors',
+    method: 'get',
   });
 
 export const fetchAuthor = (_id: string): Promise<AuthorSongs> =>
   request({
     url: `/author/${_id}`,
-    method: "get"
+    method: 'get',
   });
 
 export const getAuthor = (_id: string): Promise<GetAuthorSongs> =>
   request({
     url: `/get-author/${_id}`,
-    method: "get"
+    method: 'get',
   });

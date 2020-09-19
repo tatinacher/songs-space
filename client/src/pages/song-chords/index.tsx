@@ -1,8 +1,8 @@
-import * as React from "react";
-import { useStore } from "effector-react";
-import { getLyricChrods, $lyricChords } from "features/song";
-import { useParams } from "react-router";
-import { SongTitle, Chords, LyricsText, Switch, Loader } from "ui";
+import * as React from 'react';
+import { useStore } from 'effector-react';
+import { getLyricChrods, $lyricChords } from 'features/song';
+import { useParams } from 'react-router';
+import { SongTitle, Chords, LyricsText, Switch, Loader } from 'ui';
 import {
   Changes,
   ChordContainer,
@@ -18,14 +18,14 @@ import {
   ChordsSwitch,
   ChordsSwitchText,
   ChordsWrapper,
-  MobileTab
-} from "./style";
-import Chord from "@tombatossals/react-chords/lib/Chord";
-import * as ukulele from "lib/chords/ukulele.json";
-import * as guitar from "lib/chords/guitar.json";
-import { ChordsType, SongVariation } from "constants/types";
-import { cutText } from "lib/chords/fitChords";
-import { $isGuitar, changeInstrument } from "./model";
+  MobileTab,
+} from './style';
+import Chord from '@tombatossals/react-chords/lib/Chord';
+import * as ukulele from 'lib/chords/ukulele.json';
+import * as guitar from 'lib/chords/guitar.json';
+import { ChordsType, SongVariation } from 'constants/types';
+import { cutText } from 'lib/chords/fitChords';
+import { $isGuitar, changeInstrument } from './model';
 //import { unify } from "lib/touch";
 
 interface ChordsAndTextProps {
@@ -49,23 +49,23 @@ const showChords = (
   chords: any,
   main: any,
   tunings: any,
-  chordToDisplay: string
+  chordToDisplay: string,
 ) => {
   const mains: keyof T = chordToDisplay.slice(0, 1);
   const suffix =
-    chordToDisplay.slice(1) === "" || chordToDisplay.slice(1) === "m"
-      ? "major"
+    chordToDisplay.slice(1) === '' || chordToDisplay.slice(1) === 'm'
+      ? 'major'
       : chordToDisplay.slice(1);
 
   const allUkulelechords: T = chords;
   const chordsOfInstrument = {
     ...main,
-    tunings
+    tunings,
   };
 
   try {
     const chord = allUkulelechords[mains].find(
-      (el: any) => el.suffix === suffix
+      (el: any) => el.suffix === suffix,
     );
     if (!chord) return null;
 
@@ -107,16 +107,16 @@ export const SongChords: React.FC = () => {
   };
 
   React.useEffect(() => {
-    document.addEventListener("touchstart", handleTouchStart);
+    document.addEventListener('touchstart', handleTouchStart);
     return () => {
-      document.removeEventListener("touchstart", handleTouchStart);
+      document.removeEventListener('touchstart', handleTouchStart);
     };
   });
 
   React.useEffect(() => {
-    document.addEventListener("touchend", handleTouchEnd);
+    document.addEventListener('touchend', handleTouchEnd);
     return () => {
-      document.removeEventListener("touchend", handleTouchEnd);
+      document.removeEventListener('touchend', handleTouchEnd);
     };
   });
 
@@ -216,7 +216,7 @@ export const ChordsAndText: React.FC<ChordsAndTextProps> = ({
   isChordsOn,
   isLyricsOn,
   maxSize,
-  text
+  text,
 }) => {
   console.log(chords);
 
@@ -269,14 +269,14 @@ export const Display: React.FC<DisplayProps> = ({ chordToDisplay }) => {
       guitar.chords,
       guitar.main,
       guitar.tunings,
-      chordToDisplay
+      chordToDisplay,
     );
   } else {
     return showChords(
       ukulele.chords,
       ukulele.main,
       ukulele.tunings,
-      chordToDisplay
+      chordToDisplay,
     );
   }
 };

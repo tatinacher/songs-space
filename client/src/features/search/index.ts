@@ -2,5 +2,5 @@ export {
   $searchRequest,
   $searchResponse,
   handleChange,
-  submitForm
-} from "./model";
+  submitForm,
+} from './model';

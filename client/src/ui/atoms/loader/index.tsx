@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes } from 'styled-components';
 
 const fadeIn = keyframes`
     0% {
@@ -35,7 +35,7 @@ export const Loader = styled.div`
     left: 0;
   }
   &::before {
-    content: "";
+    content: '';
     border: 10px solid white;
     top: -10px;
     left: -10px;

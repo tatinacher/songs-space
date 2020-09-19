@@ -1,4 +1,4 @@
-import { request } from "lib/request";
+import { request } from 'lib/request';
 
 export type User = {
   name: string;
@@ -9,5 +9,5 @@ export type User = {
 export const signUp = (user: User): Promise<User> =>
   request({
     url: `/signup`,
-    method: "post"
+    method: 'post',
   });

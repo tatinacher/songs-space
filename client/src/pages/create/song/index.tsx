@@ -1,8 +1,8 @@
-import * as React from "react";
-import { submitForm, handleChange } from "./model";
-import { useStore } from "effector-react";
-import { $song } from "./model";
-import { getAuthors, $authors } from "features/authors";
+import * as React from 'react';
+import { submitForm, handleChange } from './model';
+import { useStore } from 'effector-react';
+import { $song } from './model';
+import { getAuthors, $authors } from 'features/authors';
 
 export const CreateSong: React.FC = () => {
   const { title, author } = useStore($song);
@@ -18,7 +18,7 @@ export const CreateSong: React.FC = () => {
           <div>Band:</div>
           <select name="author" value={author} onChange={handleChange}>
             <option value="">Select Author</option>
-            {authors.map(author => (
+            {authors.map((author) => (
               <option key={author._id} value={author._id}>
                 {author.author}
               </option>
