@@ -77,6 +77,7 @@ export const setColors = (chords: Set<string>) => {
 
 const findColorByName = (name: string, allChords: Set<ChordsType>) => {
   let color = "";
+
   allChords.forEach(chord => {
     if (chord.name === name) {
       color = chord.color;
@@ -176,11 +177,17 @@ export const parseLyrics: (
       lines.push({ chords: chordsInfo, text: nextLine });
       i += 1;
     } else {
-      const res: LineType = { text: line };
-      lines.push(res);
+      if (line.replace(/\s/g, "") === "") {
+        lines.push({ text: "\n" });
+      } else {
+        lines.push({ text: line });
+      }
+
       previousColor = "";
     }
   }
+  console.log(allChords);
+
   const lyricsChords = Array.from(allChords);
   return { lyrics: lines, chords: lyricsChords };
 };

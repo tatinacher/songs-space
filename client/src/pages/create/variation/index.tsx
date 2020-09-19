@@ -3,14 +3,13 @@ import styled from "styled-components";
 import { useStore } from "effector-react";
 import { handleChange, $song, updateSong, submitForm } from "./model";
 import { Text, Textarea, Input, Chords, LyricsText } from "ui";
-import { MelodyIcon } from "assets/icons";
 import { parseLyrics } from "lib/chords";
 import {
   $authors,
   $authorSongs,
   getAuthors,
   getAuthorSongs
-} from "features/authors";
+} from "./model-authors";
 import { Line } from "constants/types";
 import { FONT_SIZE } from "constants/styles";
 

@@ -23,6 +23,33 @@ router.get("/authors", (req, res) => {
   });
 });
 
+router.get("/get-author/:_id", async (req, ress) => {
+  const _id = req.params._id;
+
+  model.Songs.find({ author: _id })
+    .exec()
+    .then(allSongs => {
+      let allPromises = [];
+      let songs = [];
+      console.log(allSongs);
+
+      allSongs.forEach(song => {
+        allPromises.push(model.SongChords.find({ song: song._id }).exec());
+        songs.push({ _id: song._id, title: song.title });
+      });
+      return allSongs;
+    })
+    .then(songs => {
+      model.Authors.findById(_id, (err, author) => {
+        const result = {
+          author: author.author,
+          songs: songs
+        };
+        return ress.json({ success: true, data: result });
+      });
+    });
+});
+
 router.get("/author/:_id", async (req, ress) => {
   const _id = req.params._id;
 
@@ -31,6 +58,8 @@ router.get("/author/:_id", async (req, ress) => {
     .then(allSongs => {
       let allPromises = [];
       let songs = [];
+      console.log(allSongs);
+
       allSongs.forEach(song => {
         allPromises.push(model.SongChords.find({ song: song._id }).exec());
         songs.push({ _id: song._id, title: song.title });
@@ -38,13 +67,19 @@ router.get("/author/:_id", async (req, ress) => {
       return { allPromises, songs };
     })
     .then(res => {
+      console.log(res.allPromises);
+
       Promise.all(res.allPromises)
         .then(variations => {
           const songsNew = [];
+          console.log(variations);
 
           variations.forEach(variation => {
             res.songs.forEach(el => {
-              if (JSON.stringify(el._id) == JSON.stringify(variation[0].song)) {
+              if (
+                variation.length > 0 &&
+                JSON.stringify(el._id) == JSON.stringify(variation[0].song)
+              ) {
                 songsNew.push({ variations: variation.length, ...el });
               }
             });
