@@ -35,7 +35,7 @@ export const chordColor: string[] = [
   '#f4a261',
   '#e76f51',
   '#ef476f',
-  '#ffd166',
+  '#e76f51',
   '#06d6a0',
   '#118ab2',
   '#073b4c',

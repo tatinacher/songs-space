@@ -77,6 +77,12 @@ export const Input = styled.input`
 export const SearchResult = styled.div`
   display: flex;
   flex-direction: column;
+  background: #fff;
+  position: absolute;
+  top: 37px;
+  z-index: 1;
+  border: 1px solid #ccc;
+  border-radius: 5px;
   @media ${device.desktop} {
     flex-direction: row;
   }
@@ -87,7 +93,7 @@ export const Result = styled(Link)`
   max-height: 20px;
   background: #fff;
   color: #000;
-  margin: 10px;
+  /* margin: 5px 0; */
   padding: 10px;
   border-radius: 5px;
   text-decoration: none;
@@ -108,6 +114,7 @@ export const Result = styled(Link)`
 export const SearchBlock = styled.div`
   display: flex;
   flex-direction: column;
+  position: relative;
 `;
 
 export const SearchButton = styled.div`

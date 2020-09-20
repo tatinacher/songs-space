@@ -17,6 +17,10 @@ const containsKey: (word: string) => string | undefined = (word) => {
 
 const checkIfChordsLine = (arrLine: Array<string>) =>
   arrLine.map((word: string) => {
+    if (chordsKeys.includes(word)) {
+      return true;
+    }
+
     let isChord = false;
     const chordKey = containsKey(word);
     if (!chordKey) {

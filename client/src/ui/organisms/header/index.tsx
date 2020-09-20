@@ -30,9 +30,11 @@ export const Header: React.FC = () => (
           </Hide>
         </MenuBlock>
         <MenuBlock>
-          <Menu>
-            <Item to="/login">Sign in</Item>
-          </Menu>
+          <Hide>
+            <Menu>
+              <Item to="/login">Sign in</Item>
+            </Menu>
+          </Hide>
         </MenuBlock>
       </Content>
     </Nav>

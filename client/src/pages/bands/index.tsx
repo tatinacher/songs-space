@@ -53,7 +53,7 @@ export const Bands: React.FC = () => {
       title: (
         <SongWrapper>
           <SongLink to={'song/' + _id}>{title}</SongLink>
-          <BandSongsCount>{variations} variations</BandSongsCount>
+          <VariationsCount>{variations} variations</VariationsCount>
         </SongWrapper>
       ),
     }));
@@ -111,7 +111,14 @@ export const Band = styled.div`
 `;
 
 export const BandName = styled.div``;
+
 export const BandSongsCount = styled.div`
+  font-size: 10px;
+  color: #5f5f5f;
+  display: none;
+`;
+
+export const VariationsCount = styled.div`
   font-size: 10px;
   color: #5f5f5f;
 `;

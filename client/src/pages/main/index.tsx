@@ -22,7 +22,6 @@ export const Main: React.FC = () => (
     </Background>
     <ContentSongs>
       <LastRecords count={10} />
-      <PopularRecords count={10} />
     </ContentSongs>
   </MainPage>
 );

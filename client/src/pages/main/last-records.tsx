@@ -4,6 +4,7 @@ import { $lastSongs, getLastRecords } from './model';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { SongVariation } from 'constants/types';
+import { device } from 'constants/breakpoints';
 
 export const LastRecords: React.FC<{ count: number }> = ({ count }) => {
   const lastSongs: SongVariation[] | null = useStore($lastSongs);
@@ -34,8 +35,12 @@ export const LastRecords: React.FC<{ count: number }> = ({ count }) => {
 
 export const LastSongs = styled.div`
   display: flex;
+  /* max-width: 300px; */
   flex-direction: column;
-  max-width: 300px;
+  @media ${device.tablet} {
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
 `;
 
 export const Big = styled.div`
@@ -60,6 +65,9 @@ export const SongLink = styled(Link)`
   color: var(--primary);
   padding-bottom: 20px;
   position: relative;
+  @media ${device.tablet} {
+    flex: 1 0 50%;
+  }
   ::after {
     /*content: "•";*/
     bottom: 0;

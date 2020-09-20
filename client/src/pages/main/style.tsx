@@ -18,7 +18,7 @@ export const SearchBlock = styled.div`
 
 export const Background = styled.div`
   width: 100%;
-  overflow: hidden;
+  /* overflow: hidden; */
   display: flex;
   flex-direction: column;
   align-items: center;
