@@ -1,6 +1,6 @@
-import * as React from "react";
-import { FormLogin } from "ui";
-import styled from "styled-components";
+import * as React from 'react';
+import { FormLogin } from 'ui';
+import styled from 'styled-components';
 
 export const Login: React.FC = () => (
   <LoginPage>

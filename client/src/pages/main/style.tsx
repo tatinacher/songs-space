@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import img from "assets/img/background.jpg";
-import { device } from "constants/breakpoints";
+import styled from 'styled-components';
+import img from 'assets/img/background.jpg';
+import { device } from 'constants/breakpoints';
 
 export const MainPage = styled.div`
   display: flex;
@@ -18,7 +18,7 @@ export const SearchBlock = styled.div`
 
 export const Background = styled.div`
   width: 100%;
-  overflow: hidden;
+  /* overflow: hidden; */
   display: flex;
   flex-direction: column;
   align-items: center;

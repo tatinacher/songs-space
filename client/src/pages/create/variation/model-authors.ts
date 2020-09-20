@@ -1,6 +1,6 @@
-import { createEffect, createStore, createEvent, forward } from "effector";
+import { createEffect, createStore, createEvent, forward } from 'effector';
 
-import { Author, fetchAuthors, getAuthor, GetAuthorSongs } from "api/authors";
+import { Author, fetchAuthors, getAuthor, GetAuthorSongs } from 'api/authors';
 
 export const getAuthors = createEffect<void, Author[]>();
 export const getAuthorSongs = createEffect<string, GetAuthorSongs>();

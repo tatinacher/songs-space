@@ -4,5 +4,5 @@ export {
   getSongs,
   $authors,
   $authorSongs,
-  $authorSongsPending
-} from "./model";
+  $authorSongsPending,
+} from './model';

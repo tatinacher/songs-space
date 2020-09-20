@@ -1,8 +1,8 @@
-import styled from "styled-components";
-import { device } from "constants/breakpoints";
+import styled from 'styled-components';
+import { device } from 'constants/breakpoints';
 
 const map = (props: { isOpen: boolean }) => ({
-  "data-open": props.isOpen
+  'data-open': props.isOpen,
 });
 
 export const Lyrics = styled.div`
@@ -44,7 +44,7 @@ export const Page = styled.div.attrs(map)<{ isOpen: boolean }>`
   overflow: hidden;
   margin: 20px 0 0 10px;
 
-  &[data-open="true"] {
+  &[data-open='true'] {
     margin: 20px 0 0 100px;
   }
 
@@ -120,7 +120,7 @@ export const ChordsWrapper = styled.div`
 
 export const MobileTab = styled.div.attrs(map)<{ isOpen: boolean }>`
   display: none;
-  &[data-open="true"] {
+  &[data-open='true'] {
     display: fixed;
   }
 

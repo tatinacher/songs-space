@@ -1,6 +1,6 @@
-import * as React from "react";
-import { Link } from "react-router-dom";
-import { Content, Hide, Item, Menu, MenuBlock, Nav } from "./style";
+import * as React from 'react';
+import { Link } from 'react-router-dom';
+import { Content, Hide, Item, Menu, MenuBlock, Nav } from './style';
 
 export const Header: React.FC = () => (
   <>
@@ -30,9 +30,11 @@ export const Header: React.FC = () => (
           </Hide>
         </MenuBlock>
         <MenuBlock>
-          <Menu>
-            <Item to="/login">Sign in</Item>
-          </Menu>
+          <Hide>
+            <Menu>
+              <Item to="/login">Sign in</Item>
+            </Menu>
+          </Hide>
         </MenuBlock>
       </Content>
     </Nav>

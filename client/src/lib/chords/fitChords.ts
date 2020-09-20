@@ -1,20 +1,20 @@
-import { ChordsType } from "constants/types";
+import { ChordsType } from 'constants/types';
 
 export const cutText = (
   text: string,
   chords: ChordsType[],
-  maxSize: number
+  maxSize: number,
 ) => {
-  const textWords = text.split(" ");
+  const textWords = text.split(' ');
   const lines = [];
-  let line = "";
+  let line = '';
 
-  textWords.forEach(word => {
+  textWords.forEach((word) => {
     if ((line + word).length > maxSize) {
       lines.push(line);
-      line = "";
+      line = '';
     }
-    line += word + " ";
+    line += word + ' ';
   });
 
   lines.push(line);
@@ -39,14 +39,14 @@ export const cutText = (
         chord.beforeSpaces + chord.name.length > lineLength
       ) {
         lineChords.push({
-          name: " ",
+          name: ' ',
           afterSpaces: 0,
           beforeSpaces: lineLength - 1,
-          color: chord.color
+          color: chord.color,
         });
         chord = {
           ...chords[chordIndex],
-          beforeSpaces: chords[chordIndex].beforeSpaces - lineLength
+          beforeSpaces: chords[chordIndex].beforeSpaces - lineLength,
         };
         chords[chordIndex] = chord;
         chordLength = lineLength;
@@ -58,13 +58,13 @@ export const cutText = (
           name: chord.name,
           afterSpaces: afterSpaces,
           beforeSpaces: chord.beforeSpaces,
-          color: chord.color
+          color: chord.color,
         });
         chord = {
-          name: " ",
+          name: ' ',
           beforeSpaces: remainSpaces - 1,
           color: chords[chordIndex].color,
-          afterSpaces: 0
+          afterSpaces: 0,
         };
 
         chords[chordIndex] = chord;

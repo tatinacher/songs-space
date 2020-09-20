@@ -1,17 +1,17 @@
-import * as React from "react";
-import styled from "styled-components";
-import { useStore } from "effector-react";
-import { handleChange, $song, updateSong, submitForm } from "./model";
-import { Text, Textarea, Input, Chords, LyricsText } from "ui";
-import { parseLyrics } from "lib/chords";
+import * as React from 'react';
+import styled from 'styled-components';
+import { useStore } from 'effector-react';
+import { handleChange, $song, updateSong, submitForm } from './model';
+import { Text, Textarea, Input, Chords, LyricsText } from 'ui';
+import { parseLyrics } from 'lib/chords';
 import {
   $authors,
   $authorSongs,
   getAuthors,
-  getAuthorSongs
-} from "./model-authors";
-import { Line } from "constants/types";
-import { FONT_SIZE } from "constants/styles";
+  getAuthorSongs,
+} from './model-authors';
+import { Line } from 'constants/types';
+import { FONT_SIZE } from 'constants/styles';
 
 export const CreateSongVariation: React.FC = () => {
   const { title, fullText, lyrics } = useStore($song);
@@ -56,12 +56,12 @@ export const CreateSongVariation: React.FC = () => {
         <div>
           <Text>Band:</Text>
           <select
-            onChange={event => {
+            onChange={(event) => {
               getAuthorSongs(event.target.value);
             }}
           >
             <option value="">Select Author</option>
-            {authors.map(author => (
+            {authors.map((author) => (
               <option key={author._id} value={author._id}>
                 {author.author}
               </option>
@@ -73,7 +73,7 @@ export const CreateSongVariation: React.FC = () => {
           <select name="songId" onChange={handleChange}>
             <option value="">Select Song</option>
             {authorSongs &&
-              authorSongs.songs.map(song => (
+              authorSongs.songs.map((song) => (
                 <option key={song._id} value={song._id}>
                   {song.title}
                 </option>

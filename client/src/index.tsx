@@ -1,10 +1,15 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { routes } from "./pages/router";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Header } from "./ui";
-import "./index.css";
-import { Body } from "./style";
+import * as React from 'react';
+import ReactDOM from 'react-dom';
+import styled from 'styled-components';
+
+import { routes } from './pages/router';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Header } from './ui';
+import './index.css';
+
+export const Body = styled.div`
+  padding-top: 55px;
+`;
 
 const App = () => {
   return (
@@ -25,5 +30,5 @@ ReactDOM.render(
   <Router>
     <App />
   </Router>,
-  document.getElementById("root")
+  document.getElementById('root'),
 );

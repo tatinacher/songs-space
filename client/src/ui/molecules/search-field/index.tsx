@@ -1,19 +1,19 @@
-import * as React from "react";
-import styled from "styled-components";
-import { ButtonIcon } from "ui/atoms";
+import * as React from 'react';
+import styled from 'styled-components';
+import { ButtonIcon } from 'ui/atoms';
 import {
   $searchRequest,
   $searchResponse,
   handleChange,
-  submitForm
-} from "features/search";
-import { useStore } from "effector-react";
-import { Link } from "react-router-dom";
-import { device } from "constants/breakpoints";
-import searchIcon from "assets/icons/icons8-search.svg";
+  submitForm,
+} from 'features/search';
+import { useStore } from 'effector-react';
+import { Link } from 'react-router-dom';
+import { device } from 'constants/breakpoints';
+import searchIcon from 'assets/icons/icons8-search.svg';
 
 export const SearchField: React.FC<{ placeholder: string }> = ({
-  placeholder
+  placeholder,
 }) => {
   const song = useStore($searchRequest);
   const searchResult = useStore($searchResponse);
@@ -59,7 +59,7 @@ export const Input = styled.input`
   background: #fff;
   appearance: none;
   font-weight: 300;
-  font-family: "Roboto Mono";
+  font-family: 'Roboto Mono';
 
   :focus {
   }
@@ -77,6 +77,12 @@ export const Input = styled.input`
 export const SearchResult = styled.div`
   display: flex;
   flex-direction: column;
+  background: #fff;
+  position: absolute;
+  top: 37px;
+  z-index: 1;
+  border: 1px solid #ccc;
+  border-radius: 5px;
   @media ${device.desktop} {
     flex-direction: row;
   }
@@ -87,7 +93,7 @@ export const Result = styled(Link)`
   max-height: 20px;
   background: #fff;
   color: #000;
-  margin: 10px;
+  /* margin: 5px 0; */
   padding: 10px;
   border-radius: 5px;
   text-decoration: none;
@@ -108,6 +114,7 @@ export const Result = styled(Link)`
 export const SearchBlock = styled.div`
   display: flex;
   flex-direction: column;
+  position: relative;
 `;
 
 export const SearchButton = styled.div`

@@ -1,13 +1,13 @@
-import { chordsKeys, chordColor, chordsSuffixes } from "constants/chords";
-import { ChordsType, LineType } from "constants/types";
+import { chordsKeys, chordColor, chordsSuffixes } from 'constants/chords';
+import { ChordsType, LineType } from 'constants/types';
 
 const removeDuplicates = (array: Array<boolean>) => {
   return array.filter((a, b) => array.indexOf(a) === b);
 };
 
-const containsKey: (word: string) => string | undefined = word => {
+const containsKey: (word: string) => string | undefined = (word) => {
   let keyChord;
-  chordsKeys.forEach(chord => {
+  chordsKeys.forEach((chord) => {
     if (word.includes(chord)) {
       keyChord = chord;
     }
@@ -17,6 +17,10 @@ const containsKey: (word: string) => string | undefined = word => {
 
 const checkIfChordsLine = (arrLine: Array<string>) =>
   arrLine.map((word: string) => {
+    if (chordsKeys.includes(word)) {
+      return true;
+    }
+
     let isChord = false;
     const chordKey = containsKey(word);
     if (!chordKey) {
@@ -38,9 +42,9 @@ const checkIfChordsLine = (arrLine: Array<string>) =>
 
 export const removeExtraSpaces = (line: string) =>
   line
-    .replace(/\s+/g, " ")
+    .replace(/\s+/g, ' ')
     .trim()
-    .split(" ");
+    .split(' ');
 
 export const isChordsLine = (line: string) => {
   const arrLine = removeExtraSpaces(line);
@@ -51,10 +55,10 @@ export const isChordsLine = (line: string) => {
 
 export const getAllChords = (lyrics: Array<string>) => {
   const res: Set<string> = new Set();
-  lyrics.forEach(el => {
+  lyrics.forEach((el) => {
     if (isChordsLine(el)) {
       const chords = removeExtraSpaces(el);
-      chords.forEach(chord => res.add(chord));
+      chords.forEach((chord) => res.add(chord));
     }
   });
   return res;
@@ -63,12 +67,12 @@ export const getAllChords = (lyrics: Array<string>) => {
 export const setColors = (chords: Set<string>) => {
   const res: Set<ChordsType> = new Set();
   let index = 0;
-  chords.forEach(chord => {
+  chords.forEach((chord) => {
     res.add({
       afterSpaces: 0,
       beforeSpaces: 0,
       color: chordColor[index],
-      name: chord
+      name: chord,
     });
     index += 1;
   });
@@ -76,9 +80,9 @@ export const setColors = (chords: Set<string>) => {
 };
 
 const findColorByName = (name: string, allChords: Set<ChordsType>) => {
-  let color = "";
+  let color = '';
 
-  allChords.forEach(chord => {
+  allChords.forEach((chord) => {
     if (chord.name === name) {
       color = chord.color;
     }
@@ -91,7 +95,7 @@ export const setChords = (
   chords: Array<string>,
   allChords: Set<ChordsType>,
   nextLine: string,
-  previousColor: string
+  previousColor: string,
 ) => {
   const res: Array<ChordsType> = [];
 
@@ -104,14 +108,14 @@ export const setChords = (
   if (line.indexOf(chords[0]) !== 0) {
     const name = chords[0];
     const position = line.indexOf(name);
-    chordsLine = chordsLine.replace(name, " ".repeat(name.length));
+    chordsLine = chordsLine.replace(name, ' '.repeat(name.length));
 
     const positionNext = line.indexOf(chords[1]);
     res.push({
       afterSpaces: positionNext - position - 1,
       beforeSpaces: position,
       color: previousColor || findColorByName(name, allChords),
-      name: name
+      name: name,
     });
     index = 1;
   }
@@ -119,7 +123,7 @@ export const setChords = (
   for (let i = index; i < chords.length - 1; i++) {
     const chordPosition = chordsLine.indexOf(chords[i]);
     const name = chords[i];
-    chordsLine = chordsLine.replace(name, " ".repeat(name.length));
+    chordsLine = chordsLine.replace(name, ' '.repeat(name.length));
 
     const nextChordPosition = chordsLine.indexOf(chords[i + 1]);
     const spases = nextChordPosition - chordPosition - name.length;
@@ -128,7 +132,7 @@ export const setChords = (
       name: name,
       beforeSpaces: 0,
       afterSpaces: spases,
-      color: chordColor
+      color: chordColor,
     });
   }
   const name = chords[chords.length - 1];
@@ -136,7 +140,7 @@ export const setChords = (
 
   if (chords.length > 1) {
     let sum = 0;
-    res.forEach(el => {
+    res.forEach((el) => {
       sum += el.name.length + el.beforeSpaces + el.afterSpaces;
     });
 
@@ -145,7 +149,7 @@ export const setChords = (
       name: name,
       beforeSpaces: 0,
       afterSpaces,
-      color: chordColor
+      color: chordColor,
     });
   }
 
@@ -153,37 +157,37 @@ export const setChords = (
 };
 
 export const parseLyrics: (
-  lyrics: string
-) => { lyrics: LineType[]; chords: string[] } = lyrics => {
+  lyrics: string,
+) => { lyrics: LineType[]; chords: string[] } = (lyrics) => {
   const lines: LineType[] = [];
   const lyricLines = lyrics.split(/\r?\n/);
   const allChords = getAllChords(lyricLines);
   const chordsWithColors = setColors(allChords);
-  let previousColor = "";
+  let previousColor = '';
   for (let i = 0; i < lyricLines.length; i++) {
     const line = lyricLines[i];
     const nextLine = lyricLines[i + 1];
     const containsChords = isChordsLine(line);
-    if (containsChords && nextLine !== "") {
+    if (containsChords && nextLine !== '') {
       const chords = removeExtraSpaces(line);
       const { res: chordsInfo, chordColor: color } = setChords(
         line,
         chords,
         chordsWithColors,
         nextLine,
-        previousColor
+        previousColor,
       );
       previousColor = color;
       lines.push({ chords: chordsInfo, text: nextLine });
       i += 1;
     } else {
-      if (line.replace(/\s/g, "") === "") {
-        lines.push({ text: "\n" });
+      if (line.replace(/\s/g, '') === '') {
+        lines.push({ text: '\n' });
       } else {
         lines.push({ text: line });
       }
 
-      previousColor = "";
+      previousColor = '';
     }
   }
   console.log(allChords);

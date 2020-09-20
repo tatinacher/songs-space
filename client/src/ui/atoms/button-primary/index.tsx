@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { device } from "constants/breakpoints";
+import styled from 'styled-components';
+import { device } from 'constants/breakpoints';
 
 export const ButtonPrimary = styled.button`
   padding: 10px 15px;
@@ -11,7 +11,7 @@ export const ButtonPrimary = styled.button`
   background: var(--bg);
   color: var(--main);
   outline: none;
-  font-family: "Roboto Mono";
+  font-family: 'Roboto Mono';
 
   &:hover {
     cursor: pointer;

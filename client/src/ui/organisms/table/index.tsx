@@ -1,5 +1,5 @@
-import * as React from "react";
-import { Row, TableContainer, Thead } from "./style";
+import * as React from 'react';
+import { Row, TableContainer, Thead } from './style';
 
 export type Column<T> = {
   name: React.ReactElement | string;
@@ -17,7 +17,7 @@ interface TableBodyProps<T, U> {
 }
 
 export const TableBody: <T, U>(
-  props: TableBodyProps<T, U>
+  props: TableBodyProps<T, U>,
 ) => React.ReactElement<TableBodyProps<T, U>> = ({ rows, columns }) => {
   return (
     <tr>
@@ -29,7 +29,7 @@ export const TableBody: <T, U>(
 };
 
 export const Table: <T, U>(
-  props: TableProps<T, U>
+  props: TableProps<T, U>,
 ) => React.ReactElement<TableProps<T, U>> | null = ({ columns, data }) => {
   if (data.length === 0) return null;
   console.log(columns, data);

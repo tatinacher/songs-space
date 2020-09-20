@@ -1,10 +1,10 @@
-import { createStore, createEvent, createEffect, sample } from "effector";
-import { SongsType } from "constants/types";
-import { addSong } from "api/songs";
+import { createStore, createEvent, createEffect, sample } from 'effector';
+import { SongsType } from 'constants/types';
+import { addSong } from 'api/songs';
 
 const emptySong = {
-  _id: "",
-  title: ""
+  _id: '',
+  title: '',
 };
 
 export const submitForm = createEvent<React.FormEvent<HTMLFormElement>>();
@@ -21,5 +21,5 @@ saveSong.use(addSong);
 sample({
   source: $song,
   clock: submitForm,
-  target: saveSong
+  target: saveSong,
 });

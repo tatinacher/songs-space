@@ -5,43 +5,43 @@ import {
   Main,
   SongVariations,
   CreateSong,
-  SongChords
-} from "./";
-import { CreateSongVariation } from "./create/variation";
+  SongChords,
+} from './';
+import { CreateSongVariation } from './create/variation';
 
 export const routes = [
   {
-    path: "/",
+    path: '/',
     component: Main,
-    exact: true
+    exact: true,
   },
   {
-    path: "/song/:_id",
-    component: SongVariations
+    path: '/song/:_id',
+    component: SongVariations,
   },
   {
-    path: "/create-song",
-    component: CreateSong
+    path: '/create-song',
+    component: CreateSong,
   },
   {
-    path: "/bands",
+    path: '/bands',
     component: Bands,
-    exact: true
+    exact: true,
   },
   {
-    path: "/songs/:_id",
-    component: Songss
+    path: '/songs/:_id',
+    component: Songss,
   },
   {
-    path: "/variation/:_id",
-    component: SongChords
+    path: '/variation/:_id',
+    component: SongChords,
   },
   {
-    path: "/create-song-variation",
-    component: CreateSongVariation
+    path: '/create-song-variation',
+    component: CreateSongVariation,
   },
   {
-    path: "/login",
-    component: Login
-  }
+    path: '/login',
+    component: Login,
+  },
 ];

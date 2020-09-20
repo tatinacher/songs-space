@@ -1,13 +1,13 @@
-import { createStore, createEffect, createEvent, sample } from "effector";
-import { saveSongVariation } from "api/songs";
-import { SongVariation } from "constants/types";
+import { createStore, createEffect, createEvent, sample } from 'effector';
+import { saveSongVariation } from 'api/songs';
+import { SongVariation } from 'constants/types';
 
 export const SongVariationEmpty = {
-  title: "",
-  fullText: "",
+  title: '',
+  fullText: '',
   lyrics: [],
-  songId: "",
-  chords: []
+  songId: '',
+  chords: [],
 };
 
 export const saveSong = createEffect<SongVariation, void>();
@@ -29,5 +29,5 @@ saveSong.use(saveSongVariation);
 sample({
   source: $song,
   clock: submitForm,
-  target: saveSong
+  target: saveSong,
 });
