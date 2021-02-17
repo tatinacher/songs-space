@@ -1,11 +1,11 @@
 import { createStore, createEffect } from 'effector';
-import { fetchLyricChrods } from 'api/songs';
-import { SongVariation } from 'constants/types';
+import { fetchSongChords } from 'api/songs';
+import { SongChordsType } from 'constants/types';
 
-export const getLyricChrods = createEffect<string, SongVariation>();
-export const $lyricChords = createStore<SongVariation | null>(null);
+export const getLyricChrods = createEffect<string, SongChordsType>();
+export const $lyricChords = createStore<SongChordsType | null>(null);
 
-getLyricChrods.use(fetchLyricChrods);
+getLyricChrods.use(fetchSongChords);
 
 $lyricChords.on(getLyricChrods.done, (_, { result }) => {
   return result;

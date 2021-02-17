@@ -3,10 +3,10 @@ import { useStore } from 'effector-react';
 import { $lastSongs, getLastRecords } from './model';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { SongVariation } from 'constants/types';
+import { LastRecordsType } from 'constants/types';
 
 export const PopularRecords: React.FC<{ count: number }> = ({ count }) => {
-  const lastSongs: SongVariation[] | null = useStore($lastSongs);
+  const lastSongs: LastRecordsType[] | null = useStore($lastSongs);
 
   React.useEffect(() => {
     getLastRecords(count);
@@ -16,7 +16,7 @@ export const PopularRecords: React.FC<{ count: number }> = ({ count }) => {
     !lastSongs || lastSongs.length === 0
       ? 'No songs found'
       : lastSongs.map((song, key) => (
-          <SongLink key={key} to={'/variation/' + song._id}>
+          <SongLink key={key} to={'/variation/' + song.id}>
             {song.title}
           </SongLink>
         ));

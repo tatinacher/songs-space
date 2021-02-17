@@ -19,7 +19,7 @@ export const CreateSong: React.FC = () => {
           <select name="author" value={author} onChange={handleChange}>
             <option value="">Select Author</option>
             {authors.map((author) => (
-              <option key={author._id} value={author._id}>
+              <option key={author.id} value={author.id}>
                 {author.author}
               </option>
             ))}

@@ -1,42 +1,42 @@
 import * as React from 'react';
-import styled from 'styled-components';
-import { ButtonIcon } from 'ui/atoms';
-import {
-  $searchRequest,
-  $searchResponse,
-  handleChange,
-  submitForm,
-} from 'features/search';
-import { useStore } from 'effector-react';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+import { ButtonIcon } from 'ui/atoms';
 import { device } from 'constants/breakpoints';
+import { Song } from 'constants/types';
+
 import searchIcon from 'assets/icons/icons8-search.svg';
 
-export const SearchField: React.FC<{ placeholder: string }> = ({
-  placeholder,
-}) => {
-  const song = useStore($searchRequest);
-  const searchResult = useStore($searchResponse);
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    submitForm(event);
-  };
-  return (
-    <SearchBlock>
-      <Search onSubmit={onSubmit}>
-        <Input value={song} onChange={handleChange} placeholder={placeholder} />
-        <SearchButton>
-          <ButtonIcon icon={searchIcon} />
-        </SearchButton>
-      </Search>
-      <SearchResult>
-        {searchResult.map(({ title, _id }) => (
-          <Result to={`song/${_id}`}>{title}</Result>
-        ))}
-      </SearchResult>
-    </SearchBlock>
-  );
+export type SearchFieldType = {
+  placeholder: string;
+  song: string;
+  searchResult: Song[];
+  onSubmit: React.FormEventHandler<HTMLFormElement>;
+  handleChange: React.ChangeEventHandler<Element>;
 };
+
+export const SearchField: React.FC<SearchFieldType> = ({
+  placeholder,
+  song,
+  searchResult,
+  onSubmit,
+  handleChange,
+}) => (
+  <SearchBlock>
+    <Search onSubmit={onSubmit}>
+      <Input value={song} onChange={handleChange} placeholder={placeholder} />
+      <SearchButton>
+        <ButtonIcon icon={searchIcon} />
+      </SearchButton>
+    </Search>
+    <SearchResult>
+      {searchResult.map(({ title, id }) => (
+        <Result to={`song/${id}`}>{title}</Result>
+      ))}
+    </SearchResult>
+  </SearchBlock>
+);
 
 export const Search = styled.form`
   padding: 0 20px 0 0;

@@ -23,7 +23,7 @@ import {
 import Chord from '@tombatossals/react-chords/lib/Chord';
 import * as ukulele from 'lib/chords/ukulele.json';
 import * as guitar from 'lib/chords/guitar.json';
-import { ChordsType, SongVariation } from 'constants/types';
+import { ChordsType, SongChordsType } from 'constants/types';
 import { cutText } from 'lib/chords/fitChords';
 import { $isGuitar, changeInstrument } from './model';
 //import { unify } from "lib/touch";
@@ -81,7 +81,7 @@ const showChords = (
 };
 
 export const SongChords: React.FC = () => {
-  const { _id } = useParams();
+  const { id } = useParams();
   const [isChordsOn, setChrodsSwitch] = React.useState(true);
   const [isLyricsOn, setLyricsSwitch] = React.useState(true);
   const [isMobileTabOpen, setMobileTabOpen] = React.useState(true);
@@ -91,10 +91,10 @@ export const SongChords: React.FC = () => {
 
   const isGuitar = useStore($isGuitar);
   React.useEffect(() => {
-    if (_id) {
-      getLyricChrods(_id);
+    if (id) {
+      getLyricChrods(id);
     }
-  }, [_id]);
+  }, [id]);
 
   const handleTouchStart = (event: TouchEvent) => {
     const startPositionX = event.touches[0].clientX;
@@ -129,7 +129,7 @@ export const SongChords: React.FC = () => {
     }
   }, [touchEndPosition, touchStartPosition]);
 
-  const lyricChords: SongVariation | null = useStore($lyricChords);
+  const lyricChords: SongChordsType | null = useStore($lyricChords);
   const [fontSize, changeFontSize] = React.useState(14);
 
   React.useEffect(() => {

@@ -1,13 +1,18 @@
 import {
   Bands,
-  Songss,
+  CreateSong,
+  CreateSongVariation,
   Login,
   Main,
-  SongVariations,
-  CreateSong,
   SongChords,
+  Songss,
+  SongVariations,
 } from './';
-import { CreateSongVariation } from './create/variation';
+
+export const routesPaths = {
+  song: '/song/',
+  songChords: '/song-chords/',
+};
 
 export const routes = [
   {
@@ -16,7 +21,7 @@ export const routes = [
     exact: true,
   },
   {
-    path: '/song/:_id',
+    path: `${routesPaths.song}:id`,
     component: SongVariations,
   },
   {
@@ -29,11 +34,11 @@ export const routes = [
     exact: true,
   },
   {
-    path: '/songs/:_id',
+    path: '/songs/:id',
     component: Songss,
   },
   {
-    path: '/variation/:_id',
+    path: `${routesPaths.songChords}:id`,
     component: SongChords,
   },
   {

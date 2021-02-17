@@ -15,6 +15,9 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react"
+    // "paths": {
+    //   "types": ["./src/constants/types"]
+    // }
   },
   "include": ["src", "./typings/react-chords.d.ts"]
 }

@@ -62,7 +62,7 @@ export const CreateSongVariation: React.FC = () => {
           >
             <option value="">Select Author</option>
             {authors.map((author) => (
-              <option key={author._id} value={author._id}>
+              <option key={author.id} value={author.id}>
                 {author.author}
               </option>
             ))}
@@ -74,7 +74,7 @@ export const CreateSongVariation: React.FC = () => {
             <option value="">Select Song</option>
             {authorSongs &&
               authorSongs.songs.map((song) => (
-                <option key={song._id} value={song._id}>
+                <option key={song.id} value={song.id}>
                   {song.title}
                 </option>
               ))}

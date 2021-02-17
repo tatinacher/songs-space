@@ -3,39 +3,24 @@ import { request } from 'lib/request';
 export type Author = {
   author: string;
   description: string;
-  _id: string;
+  id: string;
+  songs: number;
 };
 
 export type Song = {
-  _id: string;
+  id: string;
   title: string;
   variations: number;
 };
 
-export type AuthorSongs = {
-  author: string;
-  songs: Song[];
-};
-
-export type GetAuthorSongs = {
-  author: string;
-  songs: { _id: string; title: string; author: string }[];
-};
-
-export const fetchAuthors = (): Promise<Author[]> =>
+export const getAuthorsList = (): Promise<Author[]> =>
   request({
-    url: '/authors',
+    url: '/authors-list',
     method: 'get',
   });
 
-export const fetchAuthor = (_id: string): Promise<AuthorSongs> =>
+export const getBandSongs = (id: string): Promise<Song[]> =>
   request({
-    url: `/author/${_id}`,
-    method: 'get',
-  });
-
-export const getAuthor = (_id: string): Promise<GetAuthorSongs> =>
-  request({
-    url: `/get-author/${_id}`,
+    url: `/author-songs/${id}`,
     method: 'get',
   });

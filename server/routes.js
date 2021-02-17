@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const mongoose = require("mongoose");
 const model = require("./data");
 var ObjectId = require("mongoose").Types.ObjectId;
 
@@ -10,23 +9,79 @@ router.get("/last-records", (req, res) => {
   model.SongChords.find()
     .sort({ date: -1 })
     .limit(count)
-    .exec(function(err, data) {
+    .exec((err, data) => {
       if (err) return res.json({ success: false, error: err });
-      return res.json({ success: true, data: data });
+
+      // give link directly to the song
+      const lastRecords = data.map(({ title, _id }) => ({
+        title,
+        id: _id
+      }));
+      return res.json({ success: true, data: lastRecords });
     });
 });
 
-router.get("/authors", (req, res) => {
+//returns all bands
+router.get("/authors-list", (req, res) => {
   model.Authors.find((err, data) => {
-    if (err) return res.json({ success: false, error: err });
-    return res.json({ success: true, data: data });
+    // const authors = data.map(({ author, description, _id }) => ({
+    //   author,
+    //   description,
+    //   id: _id
+    // }));
+    // if (err) return res.json({ success: false, error: err });
+    // return res.json({ success: true, data: authors });
+    allPromises = [];
+    data.forEach(author => {
+      allPromises.push(model.SongChords.find({ author: author._id }).exec());
+    });
+    return { data, allPromises };
+  }).then(res => {
+    Promise.all(res.allPromises).then(songs => {
+      console.log(songs);
+    });
   });
 });
 
-router.get("/get-author/:_id", async (req, ress) => {
-  const _id = req.params._id;
+// returns all author songs
+router.get("/author-songs/:id", async (req, ress) => {
+  const id = req.params.id;
 
-  model.Songs.find({ author: _id })
+  model.Songs.find({ author: id })
+    .exec()
+    .then(allSongs => {
+      let allPromises = [];
+      let songs = [];
+
+      allSongs.forEach(song => {
+        allPromises.push(model.SongChords.find({ song: song._id }).exec());
+        songs.push({ id: song._id, title: song.title });
+      });
+      return { allPromises, songs };
+    })
+    .then(res => {
+      Promise.all(res.allPromises).then(variations => {
+        const songsNew = [];
+        variations.forEach(variation => {
+          res.songs.forEach(el => {
+            if (
+              variation.length > 0 &&
+              JSON.stringify(el.id) == JSON.stringify(variation[0].song)
+            ) {
+              songsNew.push({ variations: variation.length, ...el });
+            }
+          });
+        });
+        return ress.json({ success: true, data: songsNew });
+      });
+    });
+});
+
+// used for creation a new song
+router.get("/get-author/:id", async (req, ress) => {
+  const id = req.params.id;
+
+  model.Songs.find({ author: id })
     .exec()
     .then(allSongs => {
       let allPromises = [];
@@ -34,13 +89,13 @@ router.get("/get-author/:_id", async (req, ress) => {
       console.log(allSongs);
 
       allSongs.forEach(song => {
-        allPromises.push(model.SongChords.find({ song: song._id }).exec());
-        songs.push({ _id: song._id, title: song.title });
+        allPromises.push(model.SongChords.find({ song: song.id }).exec());
+        songs.push({ id: song.id, title: song.title });
       });
       return allSongs;
     })
     .then(songs => {
-      model.Authors.findById(_id, (err, author) => {
+      model.Authors.findById(id, (err, author) => {
         const result = {
           author: author.author,
           songs: songs
@@ -50,126 +105,49 @@ router.get("/get-author/:_id", async (req, ress) => {
     });
 });
 
-router.get("/author/:_id", async (req, ress) => {
-  const _id = req.params._id;
+router.get("/song/:id", (req, res) => {
+  const id = req.params.id;
 
-  model.Songs.find({ author: _id })
-    .exec()
-    .then(allSongs => {
-      let allPromises = [];
-      let songs = [];
-      console.log(allSongs);
-
-      allSongs.forEach(song => {
-        allPromises.push(model.SongChords.find({ song: song._id }).exec());
-        songs.push({ _id: song._id, title: song.title });
-      });
-      return { allPromises, songs };
-    })
-    .then(res => {
-      console.log(res.allPromises);
-
-      Promise.all(res.allPromises)
-        .then(variations => {
-          const songsNew = [];
-          console.log(variations);
-
-          variations.forEach(variation => {
-            res.songs.forEach(el => {
-              if (
-                variation.length > 0 &&
-                JSON.stringify(el._id) == JSON.stringify(variation[0].song)
-              ) {
-                songsNew.push({ variations: variation.length, ...el });
-              }
-            });
-          });
-          return songsNew;
-        })
-        .then(songs => {
-          model.Authors.findById(_id, (err, author) => {
-            const result = {
-              author: author.author,
-              songs: songs
-            };
-            return ress.json({ success: true, data: result });
-          });
-        });
-    });
-
-  // model.Songs.find({ author: _id }).exec(async function(err, data) {
-  //   if (err) return res.json({ success: false, error: err });
-  //   console.log(1);
-
-  //   await model.Authors.findById(_id, async (err, author) => {
-  //     const songs = await data.map(async song => {
-  //       // TODO: get top song instead of first one
-  //       let variationsNumber = 0;
-  //       console.log(2);
-
-  //       await data.map(async song => {
-  //         await model.SongChords.find({ song: song._id }).exec(
-  //           (err, variations) => {
-  //             variationsNumber = variations.length;
-  //           }
-  //         );
-  //       });
-  //       console.log(3);
-
-  //       return {
-  //         _id: song._id,
-  //         title: song.title,
-  //         variations: variationsNumber
-  //       };
-  //     });
-  //     console.log(songs);
-
-  //     const result = {
-  //       author: author.author,
-  //       songs: songs
-  //     };
-  //     console.log(5);
-
-  //     return res.json({ success: true, data: result });
-  //   });
-  // });
-});
-
-router.get("/song/:_id", (req, res) => {
-  const _id = req.params._id;
-
-  model.SongChords.find({ song: new ObjectId(_id) }).exec(function(err, data) {
+  model.SongChords.find({ song: new ObjectId(id) }).exec(function(err, data) {
     if (err) return res.json({ success: false, error: err });
-    const songs = data.map(song => {
-      return {
-        _id: song._id,
-        title: song.title
-      };
-    });
+    const songs = data.map(({ _id, title }) => ({
+      id: _id,
+      title
+    }));
     return res.json({ success: true, data: songs });
   });
 });
 
-router.get("/variation/:_id", (req, res) => {
-  const _id = req.params._id;
+router.get("/song-chords/:id", (req, res) => {
+  const id = req.params.id;
 
-  model.SongChords.findById(new ObjectId(_id), (err, data) => {
+  model.SongChords.findById(new ObjectId(id), (err, data) => {
     if (err) return res.json({ success: false, error: err });
-    return res.json({ success: true, data: data });
+
+    const { _id, chords, lyrics, title, song } = data;
+    const songChord = {
+      id: _id,
+      title,
+      chords,
+      lyrics,
+      song
+    };
+
+    return res.json({ success: true, data: songChord });
   });
 });
 
 router.post("/update-author", (req, res) => {
-  const { _id, update } = req.body;
-  model.Authors.findByIdAndUpdate(_id, update, err => {
+  const { id, update } = req.body;
+  model.Authors.findByIdAndUpdate(id, update, err => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true });
   });
 });
 
 router.delete("/delete-author", (req, res) => {
-  const { _id } = req.body;
-  model.Authors.findByIdAndRemove(_id, err => {
+  const { id } = req.body;
+  model.Authors.findByIdAndRemove(id, err => {
     if (err) return res.send(err);
     return res.json({ success: true });
   });
@@ -250,12 +228,10 @@ router.get("/search", (req, res) => {
     .limit(10)
     .exec(function(err, data) {
       if (err) return res.json({ success: false, error: err });
-      const songs = data.map(song => {
-        return {
-          _id: song._id,
-          title: song.title
-        };
-      });
+      const songs = data.map(({ _id, title }) => ({
+        id: _id,
+        title
+      }));
       return res.json({ success: true, data: songs });
     });
 });

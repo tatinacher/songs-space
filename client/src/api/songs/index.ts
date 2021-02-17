@@ -1,22 +1,30 @@
 import { request } from 'lib/request';
-import { SongsType, SongVariation, Song } from 'constants/types';
+import {
+  SongsType,
+  SongVariation,
+  Song,
+  LastRecordsType,
+  SongChordsType,
+} from 'constants/types';
 
-export const fetchLastRecords = (count: number): Promise<SongVariation[]> =>
+export const fetchLastRecords = (count: number): Promise<LastRecordsType[]> =>
   request({
     url: '/last-records',
     method: 'get',
-    params: { count: count },
+    params: { count },
   });
+
+export const fetchSongChords = (id: string): Promise<SongChordsType> =>
+  request({
+    url: `/song-chords/${id}`,
+    method: 'get',
+  });
+
+//old
 
 export const fetchSongVariations = (songId: string): Promise<Song[]> =>
   request({
     url: `/song/${songId}`,
-    method: 'get',
-  });
-
-export const fetchLyricChrods = (_id: string): Promise<SongVariation> =>
-  request({
-    url: `/variation/${_id}`,
     method: 'get',
   });
 

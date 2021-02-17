@@ -9,23 +9,16 @@ export type LineType = {
   chords?: ChordsType[];
 };
 
-export type ChordsType = {
-  name: string;
-  beforeSpaces: number;
-  afterSpaces: number;
-  color: string;
-};
-
 export type SongsType = {
   title: string;
   author?: string;
   album?: string;
-  _id: string;
+  id: string;
 };
 
 export type Song = {
   title: string;
-  _id: string;
+  id: string;
 };
 
 export type Line = {
@@ -39,10 +32,37 @@ export type LyricChrods = {
 };
 
 export type SongVariation = {
-  _id?: string;
+  id?: string;
   title: string;
   fullText: string;
   lyrics: Line[];
   songId: string;
   chords: string[];
+};
+
+// new edition
+
+export type LastRecordsType = {
+  id: string;
+  title: string;
+};
+
+export type SongChordsType = {
+  id: string;
+  title: string;
+  chords: Array<string>;
+  lyrics: Array<LyricsType>;
+  song: string;
+};
+
+export type LyricsType = {
+  text: string;
+  chords: Array<ChordsType>;
+};
+
+export type ChordsType = {
+  name: string;
+  beforeSpaces: number;
+  afterSpaces: number;
+  color: string;
 };

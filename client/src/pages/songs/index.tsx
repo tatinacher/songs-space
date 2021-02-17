@@ -8,36 +8,39 @@ import { useStore } from 'effector-react';
 import { Table } from 'ui';
 import { Column } from 'ui/organisms/table';
 import { useParams } from 'react-router';
-import { AuthorSongs } from 'api/authors';
+import { Song } from 'api/authors';
 import { Title, THeadAuthor } from './style';
 
-type Song = {
+type SongType = {
   title: React.ReactElement;
 };
 
 export const Songss: React.FC = () => {
-  const { _id } = useParams();
-  console.log(useParams(), _id);
+  const { id } = useParams();
+  console.log(useParams(), id);
 
   React.useEffect(() => {
-    if (_id) {
-      getAuthorSongs(_id);
+    if (id) {
+      getAuthorSongs(id);
     }
-  }, [_id]);
-  const authorSongs: AuthorSongs | null = useStore($authorSongs);
+  }, [id]);
+  const authorSongs: Song[] | null = useStore($authorSongs);
   const authorSongsPending = useStore($authorSongsPending);
+
+  //fix
+  const author = 'Author';
 
   if (authorSongsPending) return <div>Loading</div>;
   if (!authorSongs) return <div>Песен пока что нет.</div>;
 
-  const column: Column<Song>[] = [
-    { key: 'title', name: <THeadAuthor>{authorSongs.author}</THeadAuthor> },
+  const column: Column<SongType>[] = [
+    { key: 'title', name: <THeadAuthor>{author}</THeadAuthor> },
   ];
-  const songs = authorSongs.songs.map((song) => {
-    const title = <Title to={'/song/' + song._id}>{song.title}</Title>;
+  const songsList = authorSongs.map((song) => {
+    const title = <Title to={'/song/' + song.id}>{song.title}</Title>;
     return {
       title: title,
     };
   });
-  return <Table data={songs} columns={column} />;
+  return <Table data={songsList} columns={column} />;
 };

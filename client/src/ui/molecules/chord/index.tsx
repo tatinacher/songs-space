@@ -1,5 +1,7 @@
+//why two components inside this molecule? fix
 import * as React from 'react';
 import styled from 'styled-components';
+
 import { ChordsType } from 'constants/types';
 
 interface ChordsProps {
@@ -13,11 +15,13 @@ export const Chords: React.FC<ChordsProps> = ({
   fontSize,
   showSpaces = true,
 }) => {
+  //fix this, put in on top
   if (!chords) return null;
 
   return (
     <ChordLine fontSize={fontSize}>
       {chords.map((chord, key) => {
+        //fix this
         if (!showSpaces) {
           chord.afterSpaces = 10 - chord.name.length;
           chord.beforeSpaces = 0;
@@ -28,33 +32,17 @@ export const Chords: React.FC<ChordsProps> = ({
   );
 };
 
+// show chord with spaces
 export const Chord: React.FC<ChordsType> = ({
-  beforeSpaces,
   afterSpaces,
-  name,
+  beforeSpaces,
   color,
-}) => {
-  let line = name;
-  console.log(line);
-
-  if (beforeSpaces > 0) {
-    line = ' '.repeat(beforeSpaces) + line;
-  }
-  console.log(line);
-
-  if (afterSpaces > 0) {
-    line = line + ' '.repeat(afterSpaces);
-  }
-  console.log(line);
-
-  console.log(beforeSpaces, afterSpaces, name);
-
-  return (
-    <div data-color="color" style={{ color: color }}>
-      {line}
-    </div>
-  );
-};
+  name,
+}) => (
+  <div data-color="color" style={{ color: color }}>
+    {' '.repeat(beforeSpaces) + name + ' '.repeat(afterSpaces)}
+  </div>
+);
 
 export const ChordLine = styled.div<{
   fontSize: number;

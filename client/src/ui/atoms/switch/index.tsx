@@ -2,11 +2,12 @@ import * as React from 'react';
 import styled from 'styled-components';
 
 interface SwitchProps {
-  status: boolean;
-  onClick(status: boolean): void;
   id: string;
+  onClick(status: boolean): void;
+  status: boolean;
 }
-export const Switch: React.FC<SwitchProps> = ({ status, onClick, id }) => (
+
+export const Switch: React.FC<SwitchProps> = ({ id, onClick, status }) => (
   <Label>
     <Input
       onClick={() => onClick(!status)}
@@ -24,6 +25,7 @@ export const Label = styled.label`
   width: 54px;
   height: 28px;
 `;
+
 export const Span = styled.div`
   position: absolute;
   cursor: pointer;
@@ -58,10 +60,10 @@ export const Input = styled.input`
   width: 0;
   height: 0;
   &:checked + ${Span} {
-    background-color: #2196f3;
+    background-color: var(--switch);
   }
   &:focus + ${Span} {
-    box-shadow: 0 0 1px #2196f3;
+    box-shadow: 0 0 1px var(--switch);
   }
   &:checked + ${Span}:before {
     transform: translateX(26px);

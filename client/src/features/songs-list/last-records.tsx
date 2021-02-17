@@ -1,26 +1,25 @@
 import * as React from 'react';
-import { useStore } from 'effector-react';
-import { $lastSongs, getLastRecords } from './model';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { SongVariation } from 'constants/types';
+import { useStore } from 'effector-react';
+
+import { $lastSongs, $showPreloader, getLastRecords } from './model';
+import { LastRecordsType } from 'constants/types';
 import { device } from 'constants/breakpoints';
+import { routesPaths } from 'pages/router';
 
 export const LastRecords: React.FC<{ count: number }> = ({ count }) => {
-  const lastSongs: SongVariation[] | null = useStore($lastSongs);
+  const lastSongs: LastRecordsType[] | null = useStore($lastSongs);
+  const showPreloader: boolean = useStore($showPreloader);
 
   React.useEffect(() => {
     getLastRecords(count);
+    console.log(1);
   }, [count]);
 
-  const songs =
-    !lastSongs || lastSongs.length === 0
-      ? 'No songs found'
-      : lastSongs.map((song, key) => (
-          <SongLink key={key} to={'/variation/' + song._id}>
-            {song.title}
-          </SongLink>
-        ));
+  if (showPreloader || !lastSongs || lastSongs.length === 0) {
+    return null;
+  }
 
   return (
     <Container>
@@ -28,7 +27,13 @@ export const LastRecords: React.FC<{ count: number }> = ({ count }) => {
         <Big>Last</Big>
         <Small>Songs</Small>
       </Block>
-      <LastSongs>{songs}</LastSongs>
+      <LastSongs>
+        {lastSongs.map((song, key) => (
+          <SongLink key={key} to={routesPaths.songChords + song.id}>
+            {song.title}
+          </SongLink>
+        ))}
+      </LastSongs>
     </Container>
   );
 };

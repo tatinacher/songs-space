@@ -1,79 +1,56 @@
 import * as React from 'react';
-import { useStore } from 'effector-react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { useStore } from 'effector-react';
 
-import { $authors, getAuthors, getSongs, $authorSongs } from 'features/authors';
-import { Table, SearchField } from 'ui';
-import { Column } from 'ui/organisms/table';
-import { device } from 'constants/breakpoints';
-import { Song } from 'constants/types';
 import { AudioWaveIcon } from 'assets/icons';
-import { TableLayout } from 'ui/templates';
-
-type AuthorSong = {
-  author: React.ReactElement;
-  description: string;
-};
+import { $authors, getAuthors, getSongs } from 'features/authors';
+import { Table, SearchField, TableLayout } from 'ui';
+import { device } from 'constants/breakpoints';
+import { Songs } from './songs';
+import { authorColumn } from 'constants/table';
 
 export const Bands: React.FC = () => {
   const bands = useStore($authors);
-  const authorSongs = useStore($authorSongs);
-  const column: Column<AuthorSong>[] = [
-    { key: 'author', name: <THeadAuthor>Author</THeadAuthor> },
-  ];
-  const columnSongs: Column<Song>[] = [
-    { key: 'title', name: <THeadSong>Songs</THeadSong> },
-  ];
 
   React.useEffect(() => {
     getAuthors();
   }, []);
 
-  const bandsList = bands.map((band) => ({
+  const onBandClick = React.useCallback(
+    (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      const id = event.currentTarget.getAttribute('data-band');
+      if (id) {
+        getSongs(id);
+      }
+    },
+    [],
+  );
+
+  const bandsList = bands.map(({ id, author }) => ({
     author: (
-      <Band onClick={() => getSongs(band._id)}>
+      <Band data-band={id} onClick={onBandClick}>
         <BandIcon>
           <IconImg src={AudioWaveIcon} />
         </BandIcon>
         <BandText>
-          <BandName>{band.author}</BandName>
+          <BandName>{author}</BandName>
           <BandSongsCount>23 songs</BandSongsCount>
         </BandText>
       </Band>
     ),
   }));
 
-  let songss;
-
-  if (!authorSongs) {
-    songss = null;
-  } else {
-    const songsList = authorSongs.songs.map(({ _id, title, variations }) => ({
-      title: (
-        <SongWrapper>
-          <SongLink to={'song/' + _id}>{title}</SongLink>
-          <VariationsCount>{variations} variations</VariationsCount>
-        </SongWrapper>
-      ),
-    }));
-    songss = (
-      <SongsBlock>
-        <Table data={songsList} columns={columnSongs} />
-      </SongsBlock>
-    );
-  }
-
+  //create layout?
   return (
     <TableLayout>
       <SearchWrapper>
-        <SearchField placeholder="Name of the band" />
+        {/* <SearchField placeholder="Name of the band" /> */}
       </SearchWrapper>
       <BandsAndSongs>
         <BandsBlock>
-          <Table data={bandsList} columns={column} />
+          <Table data={bandsList} columns={authorColumn} />
         </BandsBlock>
-        {songss}
+        <Songs />
       </BandsAndSongs>
     </TableLayout>
   );
@@ -89,10 +66,6 @@ export const SearchWrapper = styled.div`
   display: none;
 `;
 
-export const SongsBlock = styled.div`
-  max-width: 300px;
-  width: 50%;
-`;
 export const BandsAndSongs = styled.div`
   display: flex;
   justify-content: start;
@@ -118,11 +91,6 @@ export const BandSongsCount = styled.div`
   display: none;
 `;
 
-export const VariationsCount = styled.div`
-  font-size: 10px;
-  color: #5f5f5f;
-`;
-
 export const BandIcon = styled.div``;
 export const BandText = styled.div`
   padding-left: 10px;
@@ -135,23 +103,4 @@ export const IconImg = styled.img`
   @media ${device.tablet} {
     display: block;
   }
-`;
-
-export const THeadAuthor = styled.div`
-  padding: 20px 0 20px 51px;
-  font-weight: 100;
-`;
-
-export const THeadSong = styled.div`
-  padding: 20px 0 20px 10px;
-  font-weight: 100;
-`;
-
-export const SongLink = styled(Link)`
-  text-decoration: none;
-  color: var(--primary);
-`;
-
-export const SongWrapper = styled.div`
-  padding: 10px;
 `;

@@ -1,31 +1,33 @@
 import * as React from 'react';
 import { useStore } from 'effector-react';
-import { $songVariations, getSongVariations } from 'features/song';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+import { $songVariations, getSongVariations } from 'features/song';
 import { Table } from 'ui';
 import { Column } from 'ui/organisms/table';
 import { Song } from 'constants/types';
-import styled from 'styled-components';
 import { TableLayout } from 'ui/templates';
+import { routesPaths } from 'pages/router';
 
 type Variation = {
   title: React.ReactElement;
 };
 
 export const SongVariations: React.FC = () => {
-  const { _id } = useParams();
+  const { id } = useParams();
   console.log(useParams());
 
   React.useEffect(() => {
-    if (_id) {
-      getSongVariations(_id);
+    if (id) {
+      getSongVariations(id);
     }
-  }, [_id]);
+  }, [id]);
   const songVariations: Song[] = useStore($songVariations);
   const data = songVariations.map((variation) => {
     const title = (
-      <VariationLink to={'/variation/' + variation._id}>
+      <VariationLink to={routesPaths.songChords + variation.id}>
         {variation.title}
       </VariationLink>
     );

@@ -1,17 +1,17 @@
 import { createEffect, createStore, createEvent, forward } from 'effector';
 
-import { Author, AuthorSongs, fetchAuthors, fetchAuthor } from 'api/authors';
+import { Author, Song, getAuthorsList, getBandSongs } from 'api/authors';
 
 export const getAuthors = createEffect<void, Author[]>();
-export const getAuthorSongs = createEffect<string, AuthorSongs>();
+export const getAuthorSongs = createEffect<string, Song[]>();
 
 export const getSongs = createEvent<string>();
 
-getAuthors.use(fetchAuthors);
-getAuthorSongs.use(fetchAuthor);
+getAuthors.use(getAuthorsList);
+getAuthorSongs.use(getBandSongs);
 
 export const $authors = createStore<Author[]>([]);
-export const $authorSongs = createStore<AuthorSongs | null>(null);
+export const $authorSongs = createStore<Song[] | null>(null);
 
 $authors.on(getAuthors.done, (_, { result }) => {
   return result;

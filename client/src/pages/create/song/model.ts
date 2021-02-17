@@ -3,7 +3,7 @@ import { SongsType } from 'constants/types';
 import { addSong } from 'api/songs';
 
 const emptySong = {
-  _id: '',
+  id: '',
   title: '',
 };
 

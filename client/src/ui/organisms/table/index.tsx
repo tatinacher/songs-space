@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import { Row, TableContainer, Thead } from './style';
 
 export type Column<T> = {
@@ -31,8 +32,8 @@ export const TableBody: <T, U>(
 export const Table: <T, U>(
   props: TableProps<T, U>,
 ) => React.ReactElement<TableProps<T, U>> | null = ({ columns, data }) => {
+  // fix this
   if (data.length === 0) return null;
-  console.log(columns, data);
 
   return (
     <TableContainer>
